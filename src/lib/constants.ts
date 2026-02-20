@@ -112,51 +112,55 @@ export const TESTIMONIALS = [
 // Placez vos images dans /public/images/ et utilisez des chemins comme '/images/cabinet-1.jpg'
 export const PORTRAIT_IMAGES = [
   {
-    src: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80&auto=format',
+    src: '/images/mathieu-spaeth.png',
     alt: 'Portrait Mathieu Spaeth ostéopathe',
     label: 'Mathieu Spaeth',
     isMain: true,
   },
   {
-    src: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80&auto=format',
-    alt: 'Consultation ostéopathie',
-    isMain: false,
+    // Table de massage / cabinet propre
+    src: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format',
+    alt: 'Table de soin',
+    label: 'Table de consultation',
   },
   {
-    src: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80&auto=format',
-    alt: 'Soin ostéopathique',
-    isMain: false,
+    // Soin cervical / nuque
+    src: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=500&q=80&auto=format',
+    alt: 'Soin cervical ostéopathie',
+    label: 'Soins cervicaux',
   },
 ]
 
 export const GALLERY_IMAGES = [
   {
-    src: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80&auto=format',
+    src: '/images/bureau.jpg',
     alt: "Cabinet d'ostéopathie",
     label: 'Salle de consultation',
   },
   {
-    src: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&q=80&auto=format',
-    alt: 'Table de consultation',
-    label: 'Table de soin',
+    // Soin cervical / nuque
+    src: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=500&q=80&auto=format',
+    alt: 'Soin cervical ostéopathie',
+    label: 'Soins du dos',
   },
   {
-    src: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=500&q=80&auto=format',
-    alt: 'Équipement ostéopathie',
-    label: 'Équipement',
+    // Table de massage / cabinet propre
+    src: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format',
+    alt: 'Table de soin',
+    label: 'Table de consultation',
   },
   {
-    src: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=600&q=80&auto=format',
+    src: '/images/accueil.png',
     alt: 'Accueil cabinet',
     label: 'Accueil',
   },
   {
-    src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&auto=format',
+    src: '/images/soin-dos.jpg',
     alt: 'Soin du dos',
-    label: 'Soins du dos',
+    label: 'Soins cervicaux',
   },
   {
-    src: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=500&q=80&auto=format',
+    src: '/images/pratique-osteopathe.png',
     alt: 'Cabinet vue générale',
     label: "Vue d'ensemble",
   },
