@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ms-osteopathe — Site Next.js
 
-## Getting Started
+Refonte du site de Mathieu Spaeth, ostéopathe D.O. à Castelnau-le-Lez.
+Stack : **Next.js 14 · TypeScript · CSS Modules · next/font · next/image**
 
-First, run the development server:
+---
+
+## 🚀 Démarrage rapide
 
 ```bash
+cd osteo-nextjs
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvre [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Structure du projet
 
-## Learn More
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout (fonts, metadata)
+│   └── page.tsx            # Page d'accueil — assemble les sections
+│
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx / .module.css   # Nav fixe avec scroll effect + menu mobile
+│   │   └── Footer.tsx / .module.css
+│   │
+│   ├── sections/                      # Une section = un composant + son CSS module
+│   │   ├── Hero.tsx / .module.css
+│   │   ├── Services.tsx / .module.css
+│   │   ├── About.tsx / .module.css
+│   │   ├── Contact.tsx / .module.css
+│   │   ├── Testimonials.tsx / .module.css
+│   │   ├── Portrait.tsx / .module.css  # Section portrait avec masonry
+│   │   ├── Gallery.tsx / .module.css   # Galerie cabinet avec masonry
+│   │   └── Cta.tsx / .module.css
+│   │
+│   └── ui/
+│       ├── AnatomySvg.tsx / .module.css  # Illustration SVG animée du hero
+│
+├── lib/
+│   └── constants.ts        # ⭐ TOUT le contenu du site est ici
+│
+└── styles/
+    └── globals.css         # Design tokens CSS, classes partagées (btn-primary, section-tag…)
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✏️ Modifier le contenu
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Tout le contenu est centralisé dans `src/lib/constants.ts`** — pas besoin de toucher aux composants pour :
+- Changer les textes, horaires, coordonnées
+- Ajouter / retirer des témoignages ou services
+- Remplacer les photos
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🖼️ Remplacer les photos placeholder
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Dépose tes photos dans `/public/images/`
+2. Dans `src/lib/constants.ts`, remplace les URL Unsplash par des chemins locaux :
+
+```ts
+// Avant
+src: 'https://images.unsplash.com/photo-xxx...',
+
+// Après
+src: '/images/mathieu-portrait.jpg',
+```
+
+Les composants `Portrait` et `Gallery` utilisent `next/image` avec `fill` —
+les images s'adaptent automatiquement à leur conteneur.
+
+---
+
+## 🎨 Design system
+
+Toutes les variables CSS sont dans `globals.css` :
+
+| Variable        | Valeur      | Usage               |
+|-----------------|-------------|---------------------|
+| `--charcoal`    | `#111210`   | Fond principal      |
+| `--deep`        | `#1a1c18`   | Fond sections alt   |
+| `--gold`        | `#c8b98c`   | Accent principal    |
+| `--gold-light`  | `#e2d4aa`   | Accent clair        |
+| `--cream`       | `#f0ead8`   | Texte titres        |
+| `--text`        | `#d6cfc0`   | Texte courant       |
+| `--muted`       | `#7a7568`   | Texte secondaire    |
+| `--font-serif`  | Cormorant   | Titres              |
+| `--font-sans`   | Montserrat  | Corps de texte      |
+
+Classes utilitaires globales : `.btn-primary`, `.btn-ghost`, `.section-tag`, `.section-title`, `.fade-up`, `.delay-1..4`
+
+---
+
+## 📦 Déploiement (Vercel)
+
+```bash
+npm run build   # vérifie les erreurs TypeScript et build
+```
+
+Puis déploie directement depuis GitHub sur [vercel.com](https://vercel.com) — zéro config nécessaire.
+
+---
+
+## 🔗 Liens utiles
+
+- Doctolib : https://www.doctolib.fr/osteopathe/le-cres/mathieu-spaeth
+- Facebook  : https://fr-fr.facebook.com/mathieuspaeth.osteo/
+- LinkedIn  : https://fr.linkedin.com/in/mathieu-spaeth-6b553114b

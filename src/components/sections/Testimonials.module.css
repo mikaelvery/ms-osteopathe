@@ -1,0 +1,99 @@
+.section {
+  background: var(--deep);
+  padding: var(--section-py) var(--section-px);
+  position: relative;
+  overflow: hidden;
+}
+.section::before {
+  content: '';
+  position: absolute; top: -1px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 80px;
+}
+.ratingBadge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 28px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.ratingNum {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: var(--gold-light);
+  line-height: 1;
+}
+.stars        { color: var(--gold); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 4px; }
+.ratingCount  { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.card {
+  background: var(--card);
+  padding: 40px 32px;
+  position: relative;
+}
+.card::before {
+  content: '\201C';
+  font-family: var(--font-serif);
+  font-size: 5rem;
+  color: rgba(200, 185, 140, 0.06);
+  position: absolute;
+  top: 10px; right: 24px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.text {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+.author {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--muted));
+  display: grid; place-items: center;
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--charcoal);
+  flex-shrink: 0;
+}
+.authorName {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+}
+.authorDate {
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+@media (max-width: 1024px) {
+  .section  { padding: 80px 24px; }
+  .header   { flex-direction: column; align-items: flex-start; gap: 30px; }
+  .grid     { grid-template-columns: 1fr; }
+}

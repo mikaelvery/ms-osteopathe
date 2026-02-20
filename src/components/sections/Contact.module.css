@@ -1,0 +1,78 @@
+.section {
+  padding: var(--section-py) var(--section-px);
+  position: relative;
+}
+.section::before {
+  content: '';
+  position: absolute; top: 0; left: var(--section-px); right: var(--section-px);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border), transparent);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  margin-top: 80px;
+}
+
+.blockTitle {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+
+/* Hours list */
+.hoursList  { list-style: none; }
+.hoursItem  {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.hoursItem:last-child { border-bottom: none; }
+.day    { color: var(--muted); font-size: 0.75rem; letter-spacing: 0.04em; }
+.closed { color: var(--muted); font-style: italic; }
+
+/* Contact */
+.contactInfo { display: flex; flex-direction: column; gap: 16px; }
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 0.82rem;
+  color: var(--text);
+}
+.contactIcon {
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: grid; place-items: center;
+  color: var(--gold);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.contactItem a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.contactItem a:hover { color: var(--gold); }
+
+/* CTA block */
+.ctaDesc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+  line-height: 1.8;
+}
+
+@media (max-width: 1024px) {
+  .section { padding: 80px 24px; }
+  .grid    { grid-template-columns: 1fr; gap: 40px; margin-top: 50px; }
+  .section::before { left: 24px; right: 24px; }
+}
