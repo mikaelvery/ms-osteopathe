@@ -63,7 +63,12 @@ export default async function Gallery() {
               src={img.url}
               alt={img.label || 'Photo du cabinet'}
               fill
-              sizes="(max-width: 900px) 50vw, 25vw"
+              sizes={
+                i === 0 || i === 4
+                  ? '(max-width: 900px) 100vw, 50vw'   // grandes cellules
+                  : '(max-width: 900px) 50vw, 25vw'    // petites cellules
+              }
+              quality={90}
               className={styles.img}
             />
             {img.label && (

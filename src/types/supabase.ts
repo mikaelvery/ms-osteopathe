@@ -1,10 +1,9 @@
-// src/types/supabase.ts
-
 export type GalleryItem = {
   id: string
   url: string
   label: string
   order: number
+  is_portrait: boolean
   created_at: string
 }
 

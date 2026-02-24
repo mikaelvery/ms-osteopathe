@@ -1,8 +1,8 @@
-/* ─── Track ───────────────────────────────────────────── */
 .wrapper {
   width: 100%;
 }
 
+/* ─── Track ───────────────────────────────────────────── */
 .track {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -11,23 +11,9 @@
   margin-bottom: 32px;
 }
 
-/* Card côté (légèrement atténuée) */
-.cardSide {
-  opacity: 0.55;
-  transform: scale(0.98);
-  transition: opacity 0.4s, transform 0.4s;
-}
-
-/* Card centrale (mise en avant) */
-.cardCenter {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 0.4s, transform 0.4s;
-}
-
 /* ─── Card ────────────────────────────────────────────── */
 .card {
-  background: var(--card);
+  background: var(--card);       /* ← var(--card) pas de hexa */
   padding: 36px 32px 32px;
   position: relative;
   display: flex;
@@ -35,10 +21,22 @@
   gap: 20px;
   transition: background 0.25s, opacity 0.4s, transform 0.4s;
 }
-.cardCenter:hover,
-.cardSide:hover {
-  background: color-mix(in srgb, var(--card) 85%, var(--gold) 15%);
+
+/* Card côté — légèrement atténuée */
+.cardSide {
+  opacity: 0.5;
+  transform: scale(0.98);
+}
+
+/* Card centrale — mise en avant */
+.cardCenter {
   opacity: 1;
+  transform: scale(1);
+}
+
+.card:hover {
+  opacity: 1;
+  background: color-mix(in srgb, var(--card) 80%, var(--gold) 20%);
 }
 
 .cardIndex {
@@ -46,14 +44,16 @@
   top: 20px; right: 24px;
   font-family: var(--font-serif);
   font-size: 0.65rem;
-  color: rgba(200, 185, 140, 0.25);
+  color: var(--border);
   letter-spacing: 0.15em;
 }
 
-.cardStars { display: flex; gap: 3px; }
-.starFull  { color: var(--gold); font-size: 0.72rem; }
-.starEmpty { color: rgba(200, 185, 140, 0.15); font-size: 0.72rem; }
+/* Étoiles */
+.cardStars  { display: flex; gap: 3px; }
+.starFull   { color: var(--gold); font-size: 0.72rem; }
+.starEmpty  { color: var(--border); font-size: 0.72rem; }
 
+/* Texte */
 .text {
   font-size: 0.83rem;
   color: var(--text);
@@ -72,11 +72,13 @@
   opacity: 0.5;
 }
 
+/* Séparateur */
 .divider {
   height: 1px;
   background: linear-gradient(to right, var(--border), transparent);
 }
 
+/* Auteur */
 .author {
   display: flex;
   align-items: center;
@@ -87,7 +89,7 @@
   position: absolute;
   inset: -2px;
   border-radius: 50%;
-  border: 1px solid rgba(200, 185, 140, 0.3);
+  border: 1px solid var(--border);
 }
 .avatar {
   width: 40px; height: 40px;
@@ -103,7 +105,7 @@
   font-family: var(--font-serif);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--charcoal);
+  color: var(--dark);           /* ← var(--dark) pas de hexa */
 }
 .authorInfo { flex: 1; min-width: 0; }
 .authorName {
@@ -135,11 +137,7 @@
   margin-bottom: 32px;
 }
 
-.dots {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
+.dots { display: flex; gap: 8px; align-items: center; }
 .dot {
   width: 6px; height: 6px;
   border-radius: 50%;
@@ -154,10 +152,7 @@
   transform: scale(1.4);
 }
 
-.arrows {
-  display: flex;
-  gap: 8px;
-}
+.arrows { display: flex; gap: 8px; }
 .arrow {
   width: 40px; height: 40px;
   border-radius: 50%;
@@ -171,7 +166,7 @@
 .arrow:hover {
   border-color: var(--gold);
   color: var(--gold);
-  background: rgba(200, 185, 140, 0.06);
+  background: color-mix(in srgb, var(--card) 90%, var(--gold) 10%);
 }
 
 /* ─── CTA ─────────────────────────────────────────────── */
@@ -190,7 +185,10 @@
   text-decoration: none;
   transition: border-color 0.2s, color 0.2s;
 }
-.ctaLink:hover { border-color: var(--gold); color: var(--gold-light); }
+.ctaLink:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
 .ctaArrow { font-size: 0.9rem; transition: transform 0.2s; }
 .ctaLink:hover .ctaArrow { transform: translateX(4px); }
 
@@ -201,6 +199,7 @@
     background: transparent;
     gap: 2px;
   }
-  .cardSide { display: none; }  /* Mobile : 1 card à la fois */
+  /* Mobile : cache les cards côté, affiche uniquement la centrale */
+  .cardSide   { display: none; }
   .cardCenter { opacity: 1; transform: scale(1); }
 }

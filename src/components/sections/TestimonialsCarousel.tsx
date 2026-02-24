@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import styles from './TestimonialsCarousel.module.css'
 
@@ -31,30 +31,36 @@ function StarRating({ rating = 5 }: { rating?: number }) {
 }
 
 export default function TestimonialsCarousel({ reviews, rating, totalReviews, placeId }: Props) {
-  const [current, setCurrent] = useState(0)
+  const [current, setCurrent]         = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-
+  const touchStartX = useRef<number | null>(null)
   const total = reviews.length
 
-  const next = useCallback(() => {
-    setCurrent(c => (c + 1) % total)
-  }, [total])
+  const next = useCallback(() => setCurrent(c => (c + 1) % total), [total])
+  const prev = useCallback(() => setCurrent(c => (c - 1 + total) % total), [total])
 
-  const prev = () => {
-    setCurrent(c => (c - 1 + total) % total)
-  }
-
-  // Autoplay toutes les 5s
+  // Autoplay
   useEffect(() => {
     if (!isAutoPlaying || total === 0) return
     const timer = setInterval(next, 5000)
     return () => clearInterval(timer)
   }, [isAutoPlaying, next, total])
 
+  // ── Touch swipe ──────────────────────────────────────
+  function handleTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX
+  }
+  function handleTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return
+    const diff = touchStartX.current - e.changedTouches[0].clientX
+    if (Math.abs(diff) > 40) {       // seuil 40px
+      diff > 0 ? next() : prev()
+    }
+    touchStartX.current = null
+  }
+
   if (total === 0) return null
 
-  // Affiche 3 cards en desktop, 1 en mobile
-  // On calcule les index des 3 cards visibles
   const visibleIndexes = [
     current % total,
     (current + 1) % total,
@@ -66,6 +72,8 @@ export default function TestimonialsCarousel({ reviews, rating, totalReviews, pl
       className={styles.wrapper}
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Cards */}
       <div className={styles.track}>
@@ -107,7 +115,6 @@ export default function TestimonialsCarousel({ reviews, rating, totalReviews, pl
 
       {/* Controls */}
       <div className={styles.controls}>
-        {/* Dots */}
         <div className={styles.dots}>
           {reviews.map((_, i) => (
             <button
@@ -118,8 +125,6 @@ export default function TestimonialsCarousel({ reviews, rating, totalReviews, pl
             />
           ))}
         </div>
-
-        {/* Arrows */}
         <div className={styles.arrows}>
           <button className={styles.arrow} onClick={prev} aria-label="Précédent">
             <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">

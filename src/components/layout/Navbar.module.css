@@ -5,19 +5,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 60px;
-  background: linear-gradient(to bottom, rgba(17, 18, 16, 0.95), transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: padding 0.3s, background 0.3s;
+  padding: 24px clamp(24px, 4vw, 60px); /* padding latéral fluide */
+
+  /* Transparent au top — laisse respirer le hero */
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    padding       0.4s ease,
+    background    0.4s ease,
+    border-color  0.4s ease,
+    backdrop-filter 0.4s ease;
 }
 
 .navScrolled {
-  padding: 16px 60px;
-  background: rgba(17, 18, 16, 0.98);
+  padding: 14px clamp(24px, 4vw, 60px);
+  background: rgba(17, 18, 16, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(200, 185, 140, 0.12);
 }
 
-/* Logo */
+/* ─── Logo ─────────────────────────────────────────────── */
 .logo {
   font-family: var(--font-serif);
   font-size: 1.15rem;
@@ -38,41 +46,56 @@
   margin-top: 3px;
 }
 
-/* Desktop links */
+/* ─── Desktop links ─────────────────────────────────────── */
 .links {
   display: flex;
-  gap: 36px;
+  gap: clamp(16px, 2.5vw, 36px); /* s'adapte à la largeur dispo */
   list-style: none;
   align-items: center;
 }
 .links a {
   text-decoration: none;
-  font-size: 0.7rem;
+  font-size: clamp(0.58rem, 0.8vw, 0.7rem);
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
-  transition: color 0.3s;
+  transition: color 0.25s;
+  position: relative;
 }
-.links a:hover { color: var(--gold); }
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.links a:hover { color: var(--gold-light); }
+.links a:hover::after { transform: scaleX(1); }
 
-/* CTA button */
+/* ─── CTA button ────────────────────────────────────────── */
 .cta {
-  background: transparent !important;
-  border: 1px solid var(--gold) !important;
-  color: var(--gold) !important;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
   padding: 9px 22px;
   border-radius: 2px;
-  font-size: 0.65rem !important;
-  letter-spacing: 0.2em !important;
-  transition: background 0.3s, color 0.3s !important;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background 0.25s, color 0.25s;
 }
+.cta::after { display: none; } /* pas de soulignement sur le CTA */
 .cta:hover {
-  background: var(--gold) !important;
-  color: var(--charcoal) !important;
+  background: var(--gold);
+  color: var(--charcoal);
 }
 
-/* Burger */
+/* ─── Burger ────────────────────────────────────────────── */
 .burger {
   display: none;
   flex-direction: column;
@@ -81,16 +104,22 @@
   border: none;
   cursor: pointer;
   padding: 4px;
+  z-index: 101;
 }
 .burger span {
   display: block;
   width: 24px;
   height: 1px;
   background: var(--gold);
-  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s, width 0.3s;
 }
 
-/* Mobile drawer */
+/* Burger → croix */
+.burger span.burgerOpen:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger span.burgerOpen:nth-child(2) { opacity: 0; width: 0; }
+.burger span.burgerOpen:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* ─── Mobile drawer ─────────────────────────────────────── */
 .drawer {
   display: flex;
   flex-direction: column;
@@ -103,7 +132,7 @@
   gap: 8px;
   border-left: 1px solid var(--border);
   animation: slideIn 0.3s cubic-bezier(.25,.8,.25,1);
-  z-index: 99;
+  z-index: 100;
 }
 .drawer a {
   text-decoration: none;
@@ -114,28 +143,37 @@
   color: var(--muted);
   padding: 14px 0;
   border-bottom: 1px solid var(--border);
-  transition: color 0.3s;
+  transition: color 0.25s, padding-left 0.25s;
 }
-.drawer a:hover { color: var(--gold); }
+.drawer a:hover {
+  color: var(--gold);
+  padding-left: 8px;
+}
 .drawerCta {
-  font-family: var(--font-serif) !important;
-  font-size: 1rem !important;
+  font-family: var(--font-serif);
+  font-size: 1rem;
   font-style: italic;
-  letter-spacing: 0.02em !important;
-  text-transform: none !important;
-  color: var(--gold) !important;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--gold);
   margin-top: 20px;
-  border-bottom: none !important;
+  border-bottom: none;
+}
+
+/* Overlay sombre derrière le drawer */
+.drawerOverlay {
+  display: none;
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
 }
 
-@media (max-width: 900px) {
-  .nav    { padding: 20px 24px; }
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .nav         { padding: 20px 24px; }
   .navScrolled { padding: 14px 24px; }
-  .links  { display: none; }
-  .burger { display: flex; }
+  .links       { display: none; }
+  .burger      { display: flex; }
 }

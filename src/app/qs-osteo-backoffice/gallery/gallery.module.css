@@ -176,6 +176,14 @@
   z-index: 1000;
   animation: slideUp 0.3s ease;
 }
+
+/* Portrait status */
+.portraitActive {
+  border-color: var(--gold) !important;
+  color: var(--gold) !important;
+  background: color-mix(in srgb, var(--card) 80%, var(--gold) 20%);
+}
+
 @keyframes slideUp {
   from { transform: translateY(10px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }

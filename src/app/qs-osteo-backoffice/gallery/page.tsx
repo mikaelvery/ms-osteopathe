@@ -33,39 +33,56 @@ export default function GalleryAdmin() {
 
   // ── Upload photos ─────────────────────────────────────────────
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = Array.from(e.target.files ?? [])
-    if (!files.length) return
-    setUploading(true)
+  const files = Array.from(e.target.files ?? [])
+  if (!files.length) return
+  setUploading(true)
 
-    for (const file of files) {
-      const ext  = file.name.split('.').pop()
-      const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+  for (const file of files) {
+    console.log('📁 Fichier:', file.name, file.size, file.type)
 
-      // Upload to Storage
-      const { error: uploadErr } = await supabase.storage
-        .from('gallery')
-        .upload(path, file)
+    const ext  = file.name.split('.').pop()
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
-      if (uploadErr) { console.error(uploadErr); continue }
+    // Upload Storage
+    const { data: storageData, error: uploadErr } = await supabase.storage
+      .from('gallery')
+      .upload(path, file)
 
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('gallery')
-        .getPublicUrl(path)
+    console.log('📦 Storage:', storageData, uploadErr)
+    if (uploadErr) {
+      console.error('❌ Storage error:', uploadErr.message)
+      showToast(`Erreur upload: ${uploadErr.message}`)
+      continue
+    }
 
-      // Save to DB
-      await supabase.from('gallery').insert({
+    // URL publique
+    const { data: { publicUrl } } = supabase.storage
+      .from('gallery')
+      .getPublicUrl(path)
+
+    console.log('🔗 URL:', publicUrl)
+
+    // Insert DB
+    const { data: dbData, error: dbErr } = await supabase
+      .from('gallery')
+      .insert({
         url: publicUrl,
         label: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
         order: items.length + 1,
       })
-    }
+      .select()
 
-    await loadGallery()
-    setUploading(false)
-    showToast(`${files.length} photo${files.length > 1 ? 's' : ''} ajoutée${files.length > 1 ? 's' : ''} !`)
-    if (fileRef.current) fileRef.current.value = ''
+    console.log('🗄️ DB insert:', dbData, dbErr)
+    if (dbErr) {
+      console.error('❌ DB error:', dbErr.message)
+      showToast(`Erreur DB: ${dbErr.message}`)
+    }
   }
+
+  await loadGallery()
+  setUploading(false)
+  if (fileRef.current) fileRef.current.value = ''
+}
 
   // ── Delete photo ──────────────────────────────────────────────
   async function handleDelete(item: GalleryItem) {
@@ -104,6 +121,14 @@ export default function GalleryAdmin() {
     )
   }
 
+  // ── Toggle portrait ───────────────────────────────────────────
+  async function togglePortrait(item: GalleryItem) {
+    const is_portrait = !item.is_portrait
+    await supabase.from('gallery').update({ is_portrait }).eq('id', item.id)
+    setItems(prev => prev.map(i => i.id === item.id ? { ...i, is_portrait } : i))
+    showToast(is_portrait ? '⭐ Photo ajoutée au portrait !' : 'Photo retirée du portrait.')
+  }
+
   return (
     <div>
       {/* Toast */}
@@ -135,16 +160,36 @@ export default function GalleryAdmin() {
         onDrop={async e => {
           e.preventDefault()
           const files = Array.from(e.dataTransfer.files)
-          if (fileRef.current) {
-            const dt = new DataTransfer()
-            files.forEach(f => dt.items.add(f))
-            fileRef.current.files = dt.files
-            await handleUpload({ target: fileRef.current } as any)
+          if (!files.length) return
+          setUploading(true)
+
+          for (const file of files) {
+            const ext  = file.name.split('.').pop()
+            const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+
+            const { error: uploadErr } = await supabase.storage
+              .from('gallery')
+              .upload(path, file)
+            if (uploadErr) { console.error(uploadErr); continue }
+
+            const { data: { publicUrl } } = supabase.storage
+              .from('gallery')
+              .getPublicUrl(path)
+
+            await supabase.from('gallery').insert({
+              url: publicUrl,
+              label: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+              order: items.length + 1,
+            })
           }
+
+          await loadGallery()
+          setUploading(false)
+          showToast(`${files.length} photo${files.length > 1 ? 's' : ''} ajoutée${files.length > 1 ? 's' : ''} !`)
         }}
       >
         <span className={styles.dropIcon}>◫</span>
-        <p>Glissez vos photos ici ou <span>cliquez pour parcourir</span></p>
+        <p>{uploading ? 'Envoi en cours...' : <>Glissez vos photos ici ou <span>cliquez pour parcourir</span></>}</p>
         <p className={styles.dropHint}>JPG, PNG, WebP — max 5 Mo par photo</p>
       </div>
 
@@ -188,6 +233,13 @@ export default function GalleryAdmin() {
 
               {/* Actions */}
               <div className={styles.actions}>
+                {/* ← Bouton portrait */}
+                <button
+                  className={`${styles.actionBtn} ${item.is_portrait ? styles.portraitActive : ''}`}
+                  onClick={() => togglePortrait(item)}
+                  title={item.is_portrait ? 'Retirer du portrait' : 'Utiliser pour le portrait'}
+                >⭐</button>
+
                 <button
                   className={styles.actionBtn}
                   onClick={() => moveItem(index, -1)}
