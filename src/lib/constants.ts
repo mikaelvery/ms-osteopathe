@@ -1,7 +1,3 @@
-// lib/constants.ts
-// ── Centralise toutes les données du site ──
-// Modifiez ce fichier pour mettre à jour le contenu sans toucher aux composants.
-
 export const SITE = {
   name: 'Mathieu Spaeth',
   title: 'Mathieu Spaeth — Ostéopathe D.O.',

@@ -109,7 +109,7 @@
 .imageWrap {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #2a2e22 0%, #161810 100%);
+  background: linear-gradient(135deg, #0a7a6e 0%, #07574d 100%);
   display: flex;
   align-items: center;
   justify-content: center;

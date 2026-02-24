@@ -2,7 +2,8 @@
    globals.css — MS Ostéopathe Design System
 ───────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap');
+
 
 *, *::before, *::after {
   margin: 0;
@@ -11,20 +12,19 @@
 }
 
 :root {
-  /* Palette */
-  --charcoal:   #111210;
-  --deep:       #1a1c18;
-  --card:       #1f2119;
+  --charcoal:   #09695d;      /* fond principal — vert Mathieu */
+  --deep:       #07574d;      /* fond sections alternées — vert légèrement plus sombre */
+  --card:       #085f55;      /* fond des cards */
   --border:     rgba(200, 185, 140, 0.15);
   --gold:       #c8b98c;
   --gold-light: #e2d4aa;
   --cream:      #f0ead8;
   --text:       #d6cfc0;
-  --muted:      #7a7568;
+  --muted:      #a8c4c0; 
 
   /* Typography */
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans:  'Montserrat', sans-serif;
+  --font-serif: 'Nunito', sans-serif;   /* remplace Cormorant sur les titres */
+  --font-sans:  'Nunito', sans-serif;   /* même police partout */
 
   /* Spacing */
   --section-px: 60px;
