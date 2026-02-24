@@ -83,27 +83,6 @@ export const HOURS = [
   { day: 'Dimanche',  hours: null             },
 ]
 
-export const TESTIMONIALS = [
-  {
-    text: "Il a toujours été attentif et de bon conseil, notamment lorsque j'ai traîné pendant de longs mois des problèmes d'épaule. Je l'ai recommandé à ma conjointe qui en est aussi très satisfaite.",
-    author: 'Serruchox7',
-    date: 'Janvier 2026',
-    initial: 'S',
-  },
-  {
-    text: "La prise en charge a été globale, de la tête aux pieds. On sent un professionnel sérieux, à l'écoute et soucieux du bien-être global du patient. J'ai ressenti une amélioration nette après la séance.",
-    author: 'Louise M.',
-    date: 'Janvier 2026',
-    initial: 'L',
-  },
-  {
-    text: "Très humain et à l'écoute, je n'ai jamais eu de douleur après les séances. Les manipulations sont douces mais efficaces, et les résultats se font sentir rapidement. Je recommande les yeux fermés.",
-    author: 'Karl K.',
-    date: 'Janvier 2026',
-    initial: 'K',
-  },
-]
-
 // Remplacez les src par les vraies photos une fois disponibles.
 // Placez vos images dans /public/images/ et utilisez des chemins comme '/images/cabinet-1.jpg'
 export const PORTRAIT_IMAGES = [
