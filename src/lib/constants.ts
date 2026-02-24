@@ -26,8 +26,8 @@ export const NAV_LINKS = [
 ]
 
 export const STATS = [
-  { num: '276+', label: 'Avis Google'       },
-  { num: '5.0',  label: 'Note moyenne'      },
+  // { num: '276+', label: 'Avis Google'       },
+  // { num: '5.0',  label: 'Note moyenne'      },
   { num: '10+',  label: 'Années d\'expérience' },
 ]
 
