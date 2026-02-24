@@ -1,0 +1,105 @@
+.page {
+  min-height: 100vh;
+  background: var(--charcoal);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.logoName {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--gold-light);
+}
+.logoSub {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field label {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.field input {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color 0.3s;
+}
+.field input::placeholder { color: var(--muted); }
+.field input:focus { border-color: var(--gold); }
+
+.error {
+  font-size: 0.78rem;
+  color: #e07070;
+  text-align: center;
+}
+
+.btn {
+  background: var(--gold);
+  color: var(--charcoal);
+  border: none;
+  border-radius: 2px;
+  padding: 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, opacity 0.3s;
+  font-family: var(--font-sans);
+  margin-top: 8px;
+}
+.btn:hover    { background: var(--gold-light); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.back {
+  text-align: center;
+  margin-top: 24px;
+}
+.back a {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.back a:hover { color: var(--gold); }

@@ -1,0 +1,182 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--cream);
+}
+.subtitle { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+.uploadBtn {
+  background: var(--gold);
+  color: var(--charcoal);
+  border: none;
+  border-radius: 2px;
+  padding: 12px 24px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+.uploadBtn:hover    { background: var(--gold-light); }
+.uploadBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+.fileInput { display: none; }
+
+/* Drop zone */
+.dropZone {
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+  padding: 40px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 40px;
+  transition: border-color 0.3s, background 0.3s;
+}
+.dropZone:hover {
+  border-color: var(--gold);
+  background: rgba(200,185,140,0.03);
+}
+.dropIcon { font-size: 2rem; color: var(--muted); display: block; margin-bottom: 12px; }
+.dropZone p { font-size: 0.82rem; color: var(--muted); }
+.dropZone span { color: var(--gold); text-decoration: underline; }
+.dropHint { font-size: 0.7rem !important; margin-top: 6px; color: var(--border) !important; }
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.item {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.item:hover { border-color: rgba(200,185,140,0.3); }
+
+.imgWrap {
+  position: relative;
+  aspect-ratio: 4/3;
+  background: var(--card);
+}
+.img {
+  object-fit: cover;
+  filter: brightness(0.85);
+  transition: filter 0.3s;
+}
+.item:hover .img { filter: brightness(1); }
+
+.label {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: color 0.3s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.label:hover { color: var(--gold); }
+
+.labelEdit {
+  display: flex;
+  gap: 4px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.labelEdit input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  outline: none;
+}
+.labelEdit button {
+  background: var(--gold);
+  border: none;
+  border-radius: 2px;
+  padding: 4px 8px;
+  color: var(--charcoal);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  justify-content: center;
+}
+.actionBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  width: 28px; height: 28px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: border-color 0.2s, color 0.2s;
+  display: grid; place-items: center;
+}
+.actionBtn:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.actionBtn:disabled { opacity: 0.3; cursor: not-allowed; }
+.deleteBtn:hover:not(:disabled) {
+  border-color: #e07070 !important;
+  color: #e07070 !important;
+}
+
+/* Status */
+.loading, .empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 60px 0;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: var(--gold);
+  color: var(--charcoal);
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  z-index: 1000;
+  animation: slideUp 0.3s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(10px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}

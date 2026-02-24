@@ -12,15 +12,20 @@
 }
 
 :root {
-  --charcoal:   #09695d;      /* fond principal — vert Mathieu */
-  --deep:       #07574d;      /* fond sections alternées — vert légèrement plus sombre */
+  /* Palette officielle Mathieu */
+  --charcoal:   #065049;      /* fond principal — vert foncé du dégradé */
+  --deep:       #07574d;      /* fond sections alternées */
   --card:       #085f55;      /* fond des cards */
-  --border:     rgba(200, 185, 140, 0.15);
-  --gold:       #c8b98c;
-  --gold-light: #e2d4aa;
-  --cream:      #f0ead8;
-  --text:       #d6cfc0;
-  --muted:      #a8c4c0; 
+  --border:     rgba(201, 169, 110, 0.2);
+
+  --gold:       #c9a96e;      /* or officiel — était #c8b98c */
+  --gold-light: #d4b87a;      /* or hover */
+  --cream:      #fdfaf6;      /* blanc cassé — titres */
+  --text:       #f5efe6;      /* beige fond — texte courant */
+  --muted:      #a8c4c0;      /* texte secondaire */
+
+  /* Texte sombre pour boutons */
+  --dark:       #1c2b28;
 
   /* Typography */
   --font-serif: 'Nunito', sans-serif;   /* remplace Cormorant sur les titres */
@@ -95,7 +100,7 @@ body::before {
   align-items: center;
   gap: 10px;
   background: var(--gold);
-  color: var(--charcoal);
+  color: var(--dark);
   text-decoration: none;
   padding: 14px 32px;
   font-size: 0.7rem;

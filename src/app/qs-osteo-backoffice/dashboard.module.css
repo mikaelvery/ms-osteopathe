@@ -1,0 +1,88 @@
+.header {
+  margin-bottom: 48px;
+}
+.title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+}
+.title em { font-style: italic; color: var(--gold-light); }
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 32px 28px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+.card:hover {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.cardIcon {
+  font-size: 1.6rem;
+  color: var(--gold);
+}
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--cream);
+}
+.cardDesc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.7;
+  flex: 1;
+}
+.cardCta {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-top: 8px;
+}
+
+.tip {
+  background: rgba(200,185,140,0.06);
+  border: 1px solid rgba(200,185,140,0.15);
+  border-radius: 4px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tipIcon {
+  font-size: 1.1rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.tip p {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.tip strong { color: var(--text); }
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+}
