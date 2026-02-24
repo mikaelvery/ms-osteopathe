@@ -93,7 +93,17 @@
   font-style: italic;
   color: var(--gold-light);
 }
-
+.placeholder {
+  background: var(--card);
+  border: 1px dashed var(--border);
+  display: grid;
+  place-items: center;
+}
+.placeholder span {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-style: italic;
+}
 @media (max-width: 1024px) {
   .section { padding: 80px 24px; }
   .section::before { left: 24px; right: 24px; }

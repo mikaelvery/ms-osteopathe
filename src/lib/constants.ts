@@ -106,37 +106,37 @@ export const PORTRAIT_IMAGES = [
   },
 ]
 
-export const GALLERY_IMAGES = [
-  {
-    src: '/images/bureau.jpg',
-    alt: "Cabinet d'ostéopathie",
-    label: 'Salle de consultation',
-  },
-  {
-    // Soin cervical / nuque
-    src: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=500&q=80&auto=format',
-    alt: 'Soin cervical ostéopathie',
-    label: 'Soins du dos',
-  },
-  {
-    // Table de massage / cabinet propre
-    src: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format',
-    alt: 'Table de soin',
-    label: 'Table de consultation',
-  },
-  {
-    src: '/images/accueil.png',
-    alt: 'Accueil cabinet',
-    label: 'Accueil',
-  },
-  {
-    src: '/images/soin-dos.jpg',
-    alt: 'Soin du dos',
-    label: 'Soins cervicaux',
-  },
-  {
-    src: '/images/pratique-osteopathe.png',
-    alt: 'Cabinet vue générale',
-    label: "Vue d'ensemble",
-  },
-]
+// export const GALLERY_IMAGES = [
+//   {
+//     src: '/images/bureau.jpg',
+//     alt: "Cabinet d'ostéopathie",
+//     label: 'Salle de consultation',
+//   },
+//   {
+//     // Soin cervical / nuque
+//     src: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=500&q=80&auto=format',
+//     alt: 'Soin cervical ostéopathie',
+//     label: 'Soins du dos',
+//   },
+//   {
+//     // Table de massage / cabinet propre
+//     src: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&auto=format',
+//     alt: 'Table de soin',
+//     label: 'Table de consultation',
+//   },
+//   {
+//     src: '/images/accueil.png',
+//     alt: 'Accueil cabinet',
+//     label: 'Accueil',
+//   },
+//   {
+//     src: '/images/soin-dos.jpg',
+//     alt: 'Soin du dos',
+//     label: 'Soins cervicaux',
+//   },
+//   {
+//     src: '/images/pratique-osteopathe.png',
+//     alt: 'Cabinet vue générale',
+//     label: "Vue d'ensemble",
+//   },
+//]

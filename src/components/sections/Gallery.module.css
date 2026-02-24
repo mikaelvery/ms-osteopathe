@@ -76,6 +76,15 @@
   text-transform: uppercase;
   color: var(--gold-light);
 }
+.empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  padding: 60px 0;
+  border: 1px dashed var(--border);
+  border-radius: 4px;
+}
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
