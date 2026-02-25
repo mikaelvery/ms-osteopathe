@@ -1,18 +1,13 @@
 import { SITE } from '@/lib/constants'
-import { createClient } from '@supabase/supabase-js'
+import AnatomySvg from '@/components/ui/AnatomySvg'
 import styles from './Hero.module.css'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 async function getGoogleStats() {
   try {
     const placeId = process.env.GOOGLE_PLACE_ID
     const apiKey  = process.env.GOOGLE_PLACES_API_KEY
     if (!placeId || !apiKey) throw new Error('Missing env vars')
-    const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total&language=fr&key=${apiKey}`
+    const url  = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total&language=fr&key=${apiKey}`
     const res  = await fetch(url, { next: { revalidate: 86400 } })
     const data = await res.json()
     if (!data.result) throw new Error('No result')
@@ -25,38 +20,15 @@ async function getGoogleStats() {
   }
 }
 
-async function getHeroPhoto(): Promise<string | null> {
-  try {
-    // On cherche la 1ère photo portrait depuis Supabase
-    const { data } = await supabase
-      .from('gallery')
-      .select('url')
-      .eq('is_portrait', true)
-      .order('order', { ascending: true })
-      .limit(1)
-      .single()
-    return data?.url ?? null
-  } catch {
-    return null
-  }
-}
-
 export default async function Hero() {
-  const [{ total, rating }, heroPhotoUrl] = await Promise.all([
-    getGoogleStats(),
-    getHeroPhoto(),
-  ])
-
+  const { total, rating } = await getGoogleStats()
   const yearsOfExperience = new Date().getFullYear() - 2017
 
   const stats = [
-    { num: total  ? `${total}+`          : '276+', label: 'Avis Google'        },
-    { num: rating ? rating.toFixed(1)    : '5.0',  label: 'Note moyenne'       },
-    { num: `${yearsOfExperience}+`,                label: "Années d'expérience" },
+    { num: total  ? `${total}+`       : '276+', label: 'Avis Google'        },
+    { num: rating ? rating.toFixed(1) : '5.0',  label: 'Note moyenne'       },
+    { num: `${yearsOfExperience}+`,              label: "Années d'expérience" },
   ]
-
-  // Photo hero : Supabase en priorité, sinon image locale
-  const photoSrc = heroPhotoUrl ?? '/images/mathieu-spaeth.png'
 
   return (
     <section className={styles.hero}>
@@ -133,15 +105,12 @@ export default async function Hero() {
         </a>
       </div>
 
-      {/* ── Colonne droite — photo ── */}
+      {/* ── Colonne droite — squelette SVG ── */}
       <div className={styles.right}>
         <span className={styles.verticalLine} aria-hidden />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={photoSrc}
-          alt="Mathieu Spaeth, ostéopathe D.O."
-          loading="eager"
-        />
+        <div className={styles.imageWrap}>
+          <AnatomySvg />
+        </div>
       </div>
 
     </section>

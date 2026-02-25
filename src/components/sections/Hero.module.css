@@ -30,7 +30,7 @@
   border-radius: 50%;
 }
 
-/* Waves at bottom */
+/* Waves */
 .waves {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -52,11 +52,9 @@
   color: var(--gold-light);
   margin-bottom: 2rem;
 }
-
 .tagDot {
   display: block;
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--gold);
   flex-shrink: 0;
@@ -202,7 +200,6 @@
   font-size: 0.75rem;
   letter-spacing: 2px;
 }
-
 .googleText {
   font-family: var(--font-sans);
   font-size: 0.68rem;
@@ -213,59 +210,22 @@
 }
 .googleBadge:hover .googleText { color: rgba(245, 240, 232, 0.7); }
 
-/* ── Right column — photo ── */
+/* ── Right column — SVG squelette ── */
 .right {
+  background: var(--forest);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  /* Fond de secours si l'image met du temps à charger */
-  background: var(--sage);
-}
-
-/* L'image remplit toute la colonne */
-.right img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  filter: saturate(0.78) contrast(1.05);
-  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.right:hover img { transform: scale(1.03); }
-
-/* Gradient de fondu côté gauche pour raccorder avec la colonne sombre */
-.right::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(30, 59, 47, 0.45) 0%,
-    transparent 35%
-  );
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Overlay global léger */
-.right::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(30, 59, 47, 0.15) 0%,
-    transparent 60%
-  );
-  z-index: 1;
-  pointer-events: none;
+  /* Fond légèrement plus clair que le left pour créer un relief subtil */
+  background: linear-gradient(135deg, var(--forest) 0%, #172e24 100%);
 }
 
 /* Ligne déco verticale */
 .verticalLine {
   position: absolute;
-  top: 6rem;
+  top: 5rem;
   right: 2.5rem;
   width: 1px;
   height: 64px;
@@ -273,74 +233,102 @@
   z-index: 2;
 }
 
-/* imageWrap utilisé si AnatomySvg est conservé (non utilisé sinon) */
-.imageWrap {
+/* Halo derrière le squelette */
+.right::before {
+  content: '';
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  height: 340px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.07) 0%, transparent 65%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Séparation subtile entre les deux colonnes */
+.right::after {
+  content: '';
+  position: absolute;
+  top: 10%; bottom: 10%;
+  left: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(201, 169, 110, 0.15), transparent);
+  pointer-events: none;
+}
+
+.imageWrap {
+  position: relative;
+  z-index: 1;
+  width: 85%;
+  max-width: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  /* Légère translation vers le haut pour un équilibre visuel */
+  transform: translateY(-2%);
 }
 
-/* ── Responsive ── */
-
-/* Tablette */
+/* ── Responsive — tablette ── */
 @media (max-width: 1024px) {
-  .hero {
-    grid-template-columns: 1fr 1fr;
-  }
-  .left {
-    padding: 7rem 2rem 4.5rem;
-  }
+  .hero { grid-template-columns: 1fr 1fr; }
+  .left { padding: 7rem 2rem 4.5rem; }
   .statNum { font-size: 2rem; }
   .statDivider { margin: 0 1.25rem; }
+  .imageWrap { width: 90%; }
 }
 
-/* Mobile — une seule colonne, colonne droite cachée */
+/* ── Responsive — mobile ──
+   On empile : hero complet en colonne gauche, squelette en dessous mais réduit */
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
     min-height: 100svh;
   }
 
-  /* La colonne gauche prend tout l'écran */
   .left {
-    min-height: 100svh;
-    padding: 6.5rem 1.5rem 4rem;
+    padding: 6.5rem 1.5rem 3.5rem;
     justify-content: flex-end;
-    /* Fond enrichi d'une image en arrière-plan sur mobile */
-    background-image: linear-gradient(
-      to bottom,
-      rgba(30, 59, 47, 0.88) 0%,
-      rgba(30, 59, 47, 0.96) 60%,
-      rgba(30, 59, 47, 1) 100%
-    );
+    min-height: 85svh;
   }
 
-  /* Cacher la colonne image sur mobile */
-  .right { display: none; }
+  /* Squelette compact en bas sur mobile */
+  .right {
+    height: 220px;
+    background: linear-gradient(180deg, var(--forest) 0%, #132219 100%);
+  }
+
+  .right::after { display: none; }
+  .verticalLine { display: none; }
+
+  .imageWrap {
+    width: 160px;
+    max-width: 160px;
+    transform: translateY(0);
+  }
 
   .title { font-size: clamp(3rem, 13vw, 4.2rem); }
 
   .stats {
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem 0;
   }
-  .statDivider { display: none; }
-  .stat { flex: 0 0 auto; min-width: 80px; }
-  .statNum { font-size: 2rem; }
+  .statDivider { height: 28px; margin: 0 1rem; }
+  .statNum { font-size: 1.9rem; }
 
   .actions {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
   }
-
   .btnPrimary { width: 100%; justify-content: center; }
 }
 
 @media (max-width: 400px) {
   .title { font-size: 2.8rem; }
-  .left { padding: 6rem 1.25rem 3.5rem; }
+  .left { padding: 6rem 1.25rem 3rem; }
+  .right { height: 180px; }
+  .imageWrap { width: 130px; max-width: 130px; }
 }
