@@ -1,149 +1,79 @@
 /* ── Gallery / Le cabinet ── */
 .section {
   background: var(--forest);
-  padding: var(--section-py) var(--section-px);
+  padding: var(--section-py) 0;
+  overflow: clip;
 }
 
-/* Section tag & title overrides for dark bg */
-.section :global(.section-tag) {
-  color: var(--gold);
-}
-.section :global(.section-tag)::before {
-  background: var(--gold);
-}
-.section :global(.section-title) {
-  color: var(--cream);
-}
-.section :global(.section-title) em {
-  color: var(--gold-light);
-}
+.section :global(.section-tag) { color: var(--gold); }
+.section :global(.section-tag)::before { background: var(--gold); }
+.section :global(.section-title) { color: var(--cream); }
+.section :global(.section-title) em { color: var(--gold-light); }
 
-/* ── Header ── */
-.header {
+/* ── Two-column layout ── */
+.layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: end;
-  margin-bottom: 3.5rem;
+  grid-template-columns: 320px 1fr;
+  gap: 0;
+  align-items: start;
+  /* Important : pas d'overflow hidden ici pour laisser le carousel déborder */
+}
+
+/* ── Sticky left header ── */
+.stickyHeader {
+  position: sticky;
+  top: 6rem;
+  padding: 0 2.5rem 4rem var(--section-px);
+  align-self: start;
 }
 
 .desc {
-  font-size: 0.97rem;
-  line-height: 1.75;
+  font-size: 0.9rem;
+  line-height: 1.85;
   color: var(--muted);
   font-weight: 300;
-  align-self: end;
+  margin-top: 1.5rem;
 }
 
-/* ── Masonry grid ── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 280px 200px;
-  gap: 6px;
+.headerDivider {
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+  margin: 1.75rem 0 0.875rem;
 }
 
-/* Layout pattern — item1 is large, others fill around */
-.item {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-sm);
-  background: var(--sage);
-}
-
-/* Large feature item */
-.item1 {
-  grid-column: 1 / 3;
-  grid-row: 1 / 2;
-}
-
-/* Standard items */
-.item2 { grid-column: 3; grid-row: 1; }
-.item3 { grid-column: 4; grid-row: 1; }
-
-/* Second row — wide + two small */
-.item4 {
-  grid-column: 1 / 2;
-  grid-row: 2;
-}
-.item5 {
-  grid-column: 2 / 4;
-  grid-row: 2;
-}
-.item6 {
-  grid-column: 4;
-  grid-row: 2;
-}
-
-/* Image */
-.img {
-  object-fit: cover;
-  filter: saturate(0.75) contrast(1.05);
-  transition:
-    transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    filter 0.4s ease;
-}
-
-.item:hover .img {
-  transform: scale(1.05);
-  filter: saturate(0.92) contrast(1.05);
-}
-
-/* Caption overlay */
-.overlay {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(to top, rgba(30, 59, 47, 0.8) 0%, transparent 100%);
-  padding: 2rem 1.25rem 0.875rem;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.item:hover .overlay { opacity: 1; }
-
-.overlay span {
+.headerCount {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
-  font-weight: 300;
-  letter-spacing: 0.14em;
+  font-size: 0.57rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.85);
+  color: rgba(245, 240, 232, 0.25);
 }
 
-/* ── Empty state ── */
+/* ── Carousel area — pas de overflow: hidden ── */
+.carouselArea {
+  min-width: 0;
+  /* Le track déborde vers la droite, on le laisse faire */
+  overflow: visible;
+  padding-top: 0.5rem;
+}
+
 .empty {
   font-size: 0.9rem;
   color: var(--muted);
-  text-align: center;
-  padding: 4rem 0;
+  padding: 4rem var(--section-px) 4rem 0;
   font-style: italic;
   font-family: var(--font-serif);
 }
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .header {
+  .layout {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
   }
-
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 220px 160px 160px;
-  }
-
-  .item1 { grid-column: 1 / 3; grid-row: 1; }
-  .item2 { grid-column: 1; grid-row: 2; }
-  .item3 { grid-column: 2; grid-row: 2; }
-  .item4 { grid-column: 1; grid-row: 3; }
-  .item5 { grid-column: 2; grid-row: 3; }
-  .item6 { display: none; }
-}
-
-@media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 180px 130px 130px;
-    gap: 4px;
+  .stickyHeader {
+    position: static;
+    padding: 0 var(--section-px) 2.5rem;
   }
 }

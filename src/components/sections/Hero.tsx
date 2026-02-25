@@ -32,17 +32,15 @@ export default async function Hero() {
 
   return (
     <section className={styles.hero}>
-
-      {/* ── Colonne gauche ── */}
-      <div className={styles.left}>
-        <div className={styles.bgGlow} aria-hidden />
-
+        {/* Vagues sur toute la largeur */}
         <div className={styles.waves} aria-hidden>
           <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <path d="M0,60 C240,100 480,20 720,55 C960,90 1200,30 1440,60 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.04)" />
             <path d="M0,75 C180,40 420,90 660,68 C900,44 1140,84 1440,72 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.03)" />
           </svg>
         </div>
+
+        <div className={styles.left}>
 
         <div className={`${styles.tag} fade-up`}>
           <span className={styles.tagDot} />

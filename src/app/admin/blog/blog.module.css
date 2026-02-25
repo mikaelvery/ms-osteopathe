@@ -275,3 +275,79 @@
 }
 .saveBtn:hover:not(:disabled) { background: var(--gold-light); transform: translateY(-1px); }
 .saveBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Cover preview */
+.coverPreview {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+.coverRemove {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 0.7rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  z-index: 1;
+}
+
+.coverRemove:hover { background: rgba(180, 60, 60, 0.85); }
+
+/* Cover upload zone */
+.coverUpload {
+  border: 1.5px dashed var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+  color: var(--warm-gray);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.coverUpload:hover {
+  border-color: var(--forest);
+  background: rgba(44, 74, 62, 0.04);
+}
+
+.coverUploadIcon {
+  font-size: 1.4rem;
+  opacity: 0.5;
+  margin-bottom: 0.25rem;
+}
+
+/* YouTube preview in admin */
+.youtubePreview {
+  margin-top: 0.75rem;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid var(--border-light);
+}
+
+.youtubePreview iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}

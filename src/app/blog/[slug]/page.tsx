@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
@@ -18,7 +19,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data } = await supabase
     .from('posts')
-    .select('title, excerpt')
+    .select('title, excerpt, cover_image')
     .eq('slug', params.slug)
     .single()
 
@@ -26,19 +27,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${data.title} — Mathieu Spaeth Ostéopathe`,
     description: data.excerpt,
+    openGraph: data.cover_image ? { images: [data.cover_image] } : undefined,
   }
 }
 
-// Rendu basique du Markdown (gras, italique, titres, listes)
+function extractYoutubeId(url: string): string | null {
+  const match = url?.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+  )
+  return match ? match[1] : null
+}
+
 function renderMarkdown(text: string) {
   return text
     .split('\n')
-    .map((line, i) => {
-      if (line.startsWith('# '))  return `<h1 class="md-h1">${line.slice(2)}</h1>`
-      if (line.startsWith('## ')) return `<h2 class="md-h2">${line.slice(3)}</h2>`
+    .map(line => {
       if (line.startsWith('### ')) return `<h3 class="md-h3">${line.slice(4)}</h3>`
-      if (line.startsWith('- '))  return `<li>${line.slice(2)}</li>`
-      if (line === '')             return `<br />`
+      if (line.startsWith('## '))  return `<h2 class="md-h2">${line.slice(3)}</h2>`
+      if (line.startsWith('# '))   return `<h1 class="md-h1">${line.slice(2)}</h1>`
+      if (line.startsWith('- '))   return `<li>${line.slice(2)
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      }</li>`
+      if (line === '') return '<br />'
       return `<p>${line
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/g, '<em>$1</em>')
@@ -57,10 +68,27 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound()
 
+  const youtubeId = post.youtube_url ? extractYoutubeId(post.youtube_url) : null
+
   return (
     <main className={styles.main}>
       <div className={styles.articleContainer}>
         <Link href="/blog" className={styles.back}>← Retour aux articles</Link>
+
+        {/* Cover image */}
+        {post.cover_image && (
+          <div className={styles.articleCover}>
+            <Image
+              src={post.cover_image}
+              alt={post.title}
+              fill
+              sizes="(max-width: 800px) 100vw, 800px"
+              quality={90}
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </div>
+        )}
 
         <header className={styles.articleHeader}>
           <p className={styles.articleDate}>
@@ -72,6 +100,18 @@ export default async function PostPage({ params }: Props) {
           {post.excerpt && <p className={styles.articleExcerpt}>{post.excerpt}</p>}
         </header>
 
+        {/* YouTube embed */}
+        {youtubeId && (
+          <div className={styles.articleVideo}>
+            <iframe
+              src={`https://www.youtube.com/embed/${youtubeId}`}
+              title={post.title}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        )}
+
         <div
           className={styles.articleContent}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(post.content) }}
@@ -81,7 +121,11 @@ export default async function PostPage({ params }: Props) {
           <p className={styles.articleAuthor}>
             Rédigé par <strong>Mathieu Spaeth</strong>, Ostéopathe D.O. à Castelnau-le-Lez
           </p>
-          <Link href="https://www.doctolib.fr/osteopathe/le-cres/mathieu-spaeth" className={styles.articleCta} target="_blank">
+          <Link
+            href="https://www.doctolib.fr/osteopathe/le-cres/mathieu-spaeth"
+            className={styles.articleCta}
+            target="_blank"
+          >
             Prendre rendez-vous →
           </Link>
         </div>

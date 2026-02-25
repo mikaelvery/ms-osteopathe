@@ -207,3 +207,30 @@
   .grid { grid-template-columns: 1fr; }
   .articleFooter { flex-direction: column; align-items: flex-start; }
 }
+
+/* Article cover image */
+.articleCover {
+  position: relative;
+  width: 100%;
+  height: clamp(200px, 40vw, 420px);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+/* YouTube embed in article */
+.articleVideo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 2rem 0 2.5rem;
+  border: 1px solid rgba(44, 74, 62, 0.12);
+}
+
+.articleVideo iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
