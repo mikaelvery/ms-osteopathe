@@ -53,9 +53,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <a href="/" target="_blank" className={styles.siteLink}>
             ↗ Voir le site
           </a>
-          <button onClick={handleLogout} className={styles.logoutBtn}>
+          <a href="/qs-osteo-backoffice/logout" className={styles.logoutBtn}>
             Déconnexion
-          </button>
+          </a>
         </div>
       </aside>
 

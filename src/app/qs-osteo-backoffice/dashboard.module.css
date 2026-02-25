@@ -1,88 +1,146 @@
+/* ── Admin Dashboard ── */
+
+/* Header */
 .header {
-  margin-bottom: 48px;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.06);
 }
+
 .title {
   font-family: var(--font-serif);
-  font-size: 2.4rem;
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
   font-weight: 300;
-  color: var(--cream);
+  color: var(--forest); 
   line-height: 1.1;
+  letter-spacing: -0.01em;
 }
-.title em { font-style: italic; color: var(--gold-light); }
-.subtitle {
-  font-size: 0.85rem;
-  color: var(--muted);
-  margin-top: 8px;
+.title em {
+  font-style: italic;
+  color: var(--sage-mid);
 }
 
+.subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--warm-gray);
+  margin-top: 0.5rem;
+  letter-spacing: 0.01em;
+}
+
+/* Cards grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 2.5rem;
 }
 
+/* Card */
 .card {
-  background: var(--deep);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 32px 28px;
+  background: var(--warm-white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.75rem;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  transition: border-color 0.3s, transform 0.3s;
+  gap: 0.625rem;
+  transition:
+    border-color 0.3s,
+    background 0.3s,
+    transform 0.3s;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
+
+/* Ligne dorée en bas au hover */
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.card:hover::after { width: 100%; }
+
 .card:hover {
-  border-color: var(--gold);
-  transform: translateY(-2px);
+  background: #ede8de;
+  border-color: rgba(201, 169, 110, 0.3);
+  transform: translateY(-3px);
 }
 
 .cardIcon {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: var(--gold);
+  display: block;
+  margin-bottom: 0.25rem;
+  opacity: 0.85;
 }
+
 .cardTitle {
   font-family: var(--font-serif);
   font-size: 1.2rem;
-  font-weight: 400;
-  color: var(--cream);
+  font-weight: 500;
+  color: var(--forest);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
+
 .cardDesc {
   font-size: 0.78rem;
-  color: var(--muted);
+  font-weight: 300;
+  color: var(--warm-gray);
   line-height: 1.7;
   flex: 1;
 }
-.cardCta {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-  margin-top: 8px;
-}
 
+.cardCta {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.5rem;
+  transition: letter-spacing 0.25s;
+}
+.card:hover .cardCta { letter-spacing: 0.18em; }
+
+/* Tip */
 .tip {
-  background: rgba(200,185,140,0.06);
-  border: 1px solid rgba(200,185,140,0.15);
-  border-radius: 4px;
-  padding: 14px 18px;
+  background: rgba(201, 169, 110, 0.06);
+  border-color: rgba(201, 169, 110, 0.15);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.875rem;
 }
+
 .tipIcon {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--gold);
   flex-shrink: 0;
+  opacity: 0.8;
 }
+
 .tip p {
   font-size: 0.78rem;
-  color: var(--muted);
+  font-weight: 300;
+  color: var(--warm-gray);
+  line-height: 1.6;
 }
-.tip strong { color: var(--text); }
 
-@media (max-width: 900px) {
+.tip strong {
+  font-weight: 500;
+  color: var(--forest);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
   .grid { grid-template-columns: 1fr; }
 }

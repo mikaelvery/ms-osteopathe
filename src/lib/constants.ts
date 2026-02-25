@@ -6,6 +6,7 @@ export const SITE = {
   phone: '06 15 93 84 74',
   phoneRaw: '0615938474',
   email: 'contact@ms-osteopathe.fr',
+  developper: 'Mikael Very',
   address: {
     street: "500 Avenue de l'Europe",
     complement: 'Fitfamily, Castelnau-le-Lez',

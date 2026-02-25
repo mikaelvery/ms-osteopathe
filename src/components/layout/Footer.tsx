@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <p className={styles.copy}>
-        © {new Date().getFullYear()} {SITE.name} — Ostéopathe D.O. · Castelnau-le-Lez
+        © {new Date().getFullYear()} {SITE.developper} — Ostéopathe D.O. · Castelnau-le-Lez
       </p>
       <nav className={styles.links}>
         <Link href="/mentions-legales">Mentions légales</Link>

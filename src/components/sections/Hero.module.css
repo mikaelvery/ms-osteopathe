@@ -212,36 +212,21 @@
 
 /* ── Right column — SVG squelette ── */
 .right {
-  background: var(--forest);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Fond légèrement plus clair que le left pour créer un relief subtil */
   background: linear-gradient(135deg, var(--forest) 0%, #172e24 100%);
-}
-
-/* Ligne déco verticale */
-.verticalLine {
-  position: absolute;
-  top: 5rem;
-  right: 2.5rem;
-  width: 1px;
-  height: 64px;
-  background: linear-gradient(to bottom, transparent, var(--gold-muted), transparent);
-  z-index: 2;
 }
 
 /* Halo derrière le squelette */
 .right::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 340px;
-  height: 340px;
+  width: 340px; height: 340px;
   background: radial-gradient(circle, rgba(201, 169, 110, 0.07) 0%, transparent 65%);
   border-radius: 50%;
   pointer-events: none;
@@ -251,11 +236,19 @@
 .right::after {
   content: '';
   position: absolute;
-  top: 10%; bottom: 10%;
-  left: 0;
+  top: 10%; bottom: 10%; left: 0;
   width: 1px;
   background: linear-gradient(to bottom, transparent, rgba(201, 169, 110, 0.15), transparent);
   pointer-events: none;
+}
+
+/* Ligne déco verticale */
+.verticalLine {
+  position: absolute;
+  top: 5rem; right: 2.5rem;
+  width: 1px; height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--gold-muted), transparent);
+  z-index: 2;
 }
 
 .imageWrap {
@@ -266,11 +259,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Légère translation vers le haut pour un équilibre visuel */
   transform: translateY(-2%);
 }
 
-/* ── Responsive — tablette ── */
+/* ── Tablette ── */
 @media (max-width: 1024px) {
   .hero { grid-template-columns: 1fr 1fr; }
   .left { padding: 7rem 2rem 4.5rem; }
@@ -279,42 +271,26 @@
   .imageWrap { width: 90%; }
 }
 
-/* ── Responsive — mobile ──
-   On empile : hero complet en colonne gauche, squelette en dessous mais réduit */
+/* ── Mobile — squelette masqué, colonne gauche plein écran ── */
 @media (max-width: 768px) {
   .hero {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
     min-height: 100svh;
   }
 
+  /* Colonne gauche prend tout l'écran */
   .left {
+    min-height: 100svh;
     padding: 6.5rem 1.5rem 3.5rem;
     justify-content: flex-end;
-    min-height: 85svh;
   }
 
-  /* Squelette compact en bas sur mobile */
-  .right {
-    height: 220px;
-    background: linear-gradient(180deg, var(--forest) 0%, #132219 100%);
-  }
-
-  .right::after { display: none; }
-  .verticalLine { display: none; }
-
-  .imageWrap {
-    width: 160px;
-    max-width: 160px;
-    transform: translateY(0);
-  }
+  /* Squelette complètement masqué sur mobile */
+  .right { display: none; }
 
   .title { font-size: clamp(3rem, 13vw, 4.2rem); }
 
-  .stats {
-    flex-wrap: wrap;
-    gap: 0.5rem 0;
-  }
+  .stats { flex-wrap: wrap; }
   .statDivider { height: 28px; margin: 0 1rem; }
   .statNum { font-size: 1.9rem; }
 
@@ -329,6 +305,4 @@
 @media (max-width: 400px) {
   .title { font-size: 2.8rem; }
   .left { padding: 6rem 1.25rem 3rem; }
-  .right { height: 180px; }
-  .imageWrap { width: 130px; max-width: 130px; }
 }
