@@ -44,12 +44,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
 middleware.ts                          → racine du projet
 src/lib/supabase.ts                    → lib/
 src/types/supabase.ts                  → types/
-src/appqs-osteo-backoffice/login/page.tsx           → appqs-osteo-backoffice/login/
-src/appqs-osteo-backoffice/layout.tsx               → appqs-osteo-backoffice/
-src/appqs-osteo-backoffice/page.tsx                 → appqs-osteo-backoffice/
-src/appqs-osteo-backoffice/gallery/page.tsx         → appqs-osteo-backoffice/gallery/
-src/appqs-osteo-backoffice/hours/page.tsx           → appqs-osteo-backoffice/hours/
-src/appqs-osteo-backoffice/testimonials/page.tsx    → appqs-osteo-backoffice/testimonials/
+src/appadmin/login/page.tsx           → appadmin/login/
+src/appadmin/layout.tsx               → appadmin/
+src/appadmin/page.tsx                 → appadmin/
+src/appadmin/gallery/page.tsx         → appadmin/gallery/
+src/appadmin/hours/page.tsx           → appadmin/hours/
+src/appadmin/testimonials/page.tsx    → appadmin/testimonials/
 + tous les .module.css correspondants
 ```
 
@@ -57,7 +57,7 @@ src/appqs-osteo-backoffice/testimonials/page.tsx    → appqs-osteo-backoffice/t
 
 ## 🔐 Sécurité
 
-- **Middleware Next.js** : toute URL `qs-osteo-backoffice/*` redirige vers `qs-osteo-backoffice/login` si non connecté
+- **Middleware Next.js** : toute URL `admin/*` redirige vers `admin/login` si non connecté
 - **Supabase RLS** : lecture publique, écriture uniquement pour les utilisateurs authentifiés
 - **Supabase Auth** : session JWT gérée automatiquement, expire après inactivité
 
@@ -67,5 +67,5 @@ src/appqs-osteo-backoffice/testimonials/page.tsx    → appqs-osteo-backoffice/t
 ## 🌐 URL d'accès
 
 - **Site public** : `https://ms-osteopathe.fr`
-- **Admin** : `https://ms-osteopathe.frqs-osteo-backoffice`
-- **Login** : `https://ms-osteopathe.frqs-osteo-backoffice/login`
+- **Admin** : `https://ms-osteopathe.fradmin`
+- **Login** : `https://ms-osteopathe.fradmin/login`

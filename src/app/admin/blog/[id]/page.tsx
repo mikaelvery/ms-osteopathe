@@ -41,7 +41,7 @@ export default function EditPost() {
   return (
     <div>
       <div className={styles.header}>
-        <a href="/qs-osteo-backoffice/blog" className={blogStyles.backLink}>← Retour aux articles</a>
+        <a href="/admin/blog" className={blogStyles.backLink}>← Retour aux articles</a>
         <h1 className={styles.title}>Éditer <em>l'article</em></h1>
       </div>
 

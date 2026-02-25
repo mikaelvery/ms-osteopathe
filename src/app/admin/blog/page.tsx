@@ -56,7 +56,7 @@ export default function BlogAdmin() {
     setCreating(false)
     setNewTitle('')
     if (data) {
-      window.location.href = `/qs-osteo-backoffice/blog/${data.id}`
+      window.location.href = `/admin/blog/${data.id}`
     }
   }
 
@@ -126,7 +126,7 @@ export default function BlogAdmin() {
                   {post.published ? 'Dépublier' : 'Publier'}
                 </button>
                 <a
-                  href={`/qs-osteo-backoffice/blog/${post.id}`}
+                  href={`/admin/blog/${post.id}`}
                   className={blogStyles.actionBtn}
                 >
                   Éditer

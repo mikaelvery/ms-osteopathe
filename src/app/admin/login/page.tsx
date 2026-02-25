@@ -25,7 +25,7 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/qs-osteo-backoffice')
+    router.push('/admin')
   }
 
   return (

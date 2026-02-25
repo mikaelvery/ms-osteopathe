@@ -6,8 +6,8 @@ import styles from './layout.module.css'
 
 // ── Chemin secret ────────────────────────────────────────────────
 // Pour changer l'URL admin, modifie uniquement BASE_PATH ici
-// + renomme le dossier src/app/qs-osteo-backoffice en conséquence
-const BASE_PATH = '/qs-osteo-backoffice'
+// + renomme le dossier src/app/admin en conséquence
+const BASE_PATH = '/admin'
 
 const NAV = [
   { href: BASE_PATH,                  icon: '⊞', label: 'Tableau de bord' },
@@ -53,7 +53,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <a href="/" target="_blank" className={styles.siteLink}>
             ↗ Voir le site
           </a>
-          <a href="/qs-osteo-backoffice/logout" className={styles.logoutBtn}>
+          <a href="/admin/logout" className={styles.logoutBtn}>
             Déconnexion
           </a>
         </div>

@@ -2,8 +2,8 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const ADMIN_PATH = '/qs-osteo-backoffice'
-const LOGIN_PATH = '/qs-osteo-backoffice/login'
+const ADMIN_PATH = '/admin'
+const LOGIN_PATH = '/admin/login'
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
@@ -39,5 +39,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/qs-osteo-backoffice/:path*'],
+  matcher: ['/admin/:path*'],
 }
