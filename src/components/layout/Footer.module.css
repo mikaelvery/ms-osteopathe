@@ -1,37 +1,55 @@
+/* ── Footer ── */
 .footer {
-  padding: 40px 60px;
-  border-top: 1px solid var(--border);
+  background: var(--charcoal);
+  padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .copy {
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.05em;
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: rgba(245, 240, 232, 0.4);
+  letter-spacing: 0.01em;
 }
 
 .links {
   display: flex;
-  gap: 28px;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
-.links a {
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-.links a:hover { color: var(--gold); }
 
+.links a {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.28);
+  text-decoration: none;
+  transition: color 0.25s;
+}
+.links a:hover { color: rgba(245, 240, 232, 0.75); }
+
+/* Mobile : padding-bottom pour dégager le bouton flottant (≈56px) */
 @media (max-width: 768px) {
   .footer {
     flex-direction: column;
-    gap: 20px;
-    text-align: center;
-    padding: 32px 24px;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-bottom: calc(2.5rem + 72px);
   }
+  .links { gap: 1.25rem; }
+  .copy { font-size: 0.82rem; line-height: 1.5; }
+}
+
+/* Tablette — bouton encore affiché */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .footer { padding-bottom: calc(2rem + 64px); }
 }

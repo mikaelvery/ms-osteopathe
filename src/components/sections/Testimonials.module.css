@@ -1,235 +1,90 @@
+/* ── Testimonials ── */
 .section {
-  background: var(--deep);
+  background: var(--warm-white);
   padding: var(--section-py) var(--section-px);
-  position: relative;
   overflow: hidden;
 }
-.section::before {
-  content: '';
-  position: absolute; top: -1px; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-}
 
-/* ─── Header ─────────────────────────────────────────── */
+/* ── Header ── */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 64px;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  flex-wrap: wrap;
 }
 
+/* ── Rating badge ── */
 .ratingBadge {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 20px 28px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  flex-shrink: 0;
+  gap: 1.5rem;
   text-decoration: none;
-  transition: border-color 0.2s, background 0.2s;
+  padding: 1.25rem 1.75rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: white;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  flex-shrink: 0;
 }
 .ratingBadge:hover {
   border-color: var(--gold);
-  background: rgba(200, 185, 140, 0.04);
+  box-shadow: 0 8px 24px rgba(30, 59, 47, 0.07);
 }
 
 .ratingLeft {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
 }
+
 .ratingNum {
   font-family: var(--font-serif);
-  font-size: 2.8rem;
-  font-weight: 300;
-  color: var(--gold-light);
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: var(--forest);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
-.ratingStars { color: var(--gold); font-size: 0.8rem; letter-spacing: 3px; }
+
+.ratingStars {
+  color: var(--gold);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
 
 .ratingRight {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.35rem;
 }
+
 .ratingCount {
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--forest);
+  white-space: nowrap;
 }
+
 .googleBadge {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.65rem;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-}
-.googleDot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  opacity: 0.6;
-}
-
-/* ─── Grid ────────────────────────────────────────────── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border);
-}
-
-/* ─── Card ────────────────────────────────────────────── */
-.card {
-  background: var(--card);
-  padding: 36px 32px 32px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  transition: background 0.25s;
-}
-.card:hover {
-  background: color-mix(in srgb, var(--card) 85%, var(--gold) 15%);
-}
-
-/* Numéro de position discret */
-.cardIndex {
-  position: absolute;
-  top: 20px; right: 24px;
-  font-family: var(--font-serif);
-  font-size: 0.65rem;
-  color: rgba(200, 185, 140, 0.25);
-  letter-spacing: 0.15em;
-}
-
-/* Étoiles individuelles de la review */
-.cardStars {
-  display: flex;
-  gap: 3px;
-}
-.starFull  { color: var(--gold); font-size: 0.72rem; }
-.starEmpty { color: rgba(200, 185, 140, 0.2); font-size: 0.72rem; }
-
-/* Texte */
-.text {
-  font-size: 0.83rem;
-  color: var(--text);
-  line-height: 1.85;
-  flex: 1;
-  /* Guillemet ouverture */
-  position: relative;
-  padding-left: 16px;
-}
-.text::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 4px; bottom: 4px;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  border-radius: 2px;
-  opacity: 0.5;
-}
-
-/* Séparateur */
-.divider {
-  height: 1px;
-  background: linear-gradient(to right, var(--border), transparent);
-}
-
-/* Auteur */
-.author {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.avatarWrapper {
-  position: relative;
-  flex-shrink: 0;
-}
-.avatarRing {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  border: 1px solid rgba(200, 185, 140, 0.3);
-}
-.avatar {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-.avatarFallback {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--muted));
-  display: grid;
-  place-items: center;
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--charcoal);
-}
-
-.authorInfo { flex: 1; min-width: 0; }
-.authorName {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--cream);
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.authorDate {
-  font-size: 0.67rem;
-  color: var(--muted);
-  margin-top: 3px;
-  letter-spacing: 0.03em;
-}
-
-.googleIcon {
-  flex-shrink: 0;
-  opacity: 0.35;
-  transition: opacity 0.2s;
-}
-.card:hover .googleIcon { opacity: 0.6; }
-
-/* ─── CTA ─────────────────────────────────────────────── */
-.cta {
-  margin-top: 48px;
-  text-align: center;
-}
-.ctaLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 32px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  font-size: 0.75rem;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 300;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
+  color: var(--warm-gray);
 }
-.ctaLink:hover {
-  border-color: var(--gold);
-  color: var(--gold-light);
-}
-.ctaArrow { font-size: 0.9rem; transition: transform 0.2s; }
-.ctaLink:hover .ctaArrow { transform: translateX(4px); }
 
-/* ─── Responsive ──────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .section { padding: 80px 24px; }
-  .header  { flex-direction: column; align-items: flex-start; gap: 30px; }
-  .grid    { grid-template-columns: 1fr; background: transparent; gap: 2px; }
+.googleDot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
 }

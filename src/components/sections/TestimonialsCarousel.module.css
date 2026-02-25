@@ -1,205 +1,175 @@
-.wrapper {
-  width: 100%;
+/* ── Testimonials Carousel ── */
+
+/* Track wrapper */
+.carouselWrap {
+  position: relative;
 }
 
-/* ─── Track ───────────────────────────────────────────── */
 .track {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1px;
-  background: var(--border);
-  margin-bottom: 32px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
 }
 
-/* ─── Card ────────────────────────────────────────────── */
+/* ── Review card ── */
 .card {
-  background: var(--card);       /* ← var(--card) pas de hexa */
-  padding: 36px 32px 32px;
+  background: white;
+  padding: 2.25rem 2rem 1.75rem;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  transition: background 0.25s, opacity 0.4s, transform 0.4s;
-}
-
-/* Card côté — légèrement atténuée */
-.cardSide {
-  opacity: 0.5;
-  transform: scale(0.98);
-}
-
-/* Card centrale — mise en avant */
-.cardCenter {
-  opacity: 1;
-  transform: scale(1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
 }
 
 .card:hover {
-  opacity: 1;
-  background: color-mix(in srgb, var(--card) 80%, var(--gold) 20%);
+  transform: translateY(-5px);
+  box-shadow: 0 24px 48px rgba(30, 59, 47, 0.09);
+  z-index: 1;
 }
 
-.cardIndex {
+/* Decorative quote mark */
+.card::before {
+  content: '\201C';
   position: absolute;
-  top: 20px; right: 24px;
+  top: 0.75rem;
+  right: 1.25rem;
   font-family: var(--font-serif);
-  font-size: 0.65rem;
-  color: var(--border);
-  letter-spacing: 0.15em;
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--border-light);
+  pointer-events: none;
+  font-style: italic;
 }
 
-/* Étoiles */
-.cardStars  { display: flex; gap: 3px; }
-.starFull   { color: var(--gold); font-size: 0.72rem; }
-.starEmpty  { color: var(--border); font-size: 0.72rem; }
+/* Stars */
+.stars {
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  margin-bottom: 1.1rem;
+  display: block;
+}
 
-/* Texte */
+/* Review text */
 .text {
-  font-size: 0.83rem;
-  color: var(--text);
-  line-height: 1.85;
-  flex: 1;
-  position: relative;
-  padding-left: 16px;
-}
-.text::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 4px; bottom: 4px;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--gold), transparent);
-  border-radius: 2px;
-  opacity: 0.5;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--sage-mid);
+  margin-bottom: 1.75rem;
+  letter-spacing: -0.005em;
 }
 
-/* Séparateur */
-.divider {
-  height: 1px;
-  background: linear-gradient(to right, var(--border), transparent);
-}
-
-/* Auteur */
+/* Author row */
 .author {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
 }
-.avatarWrapper { position: relative; flex-shrink: 0; }
-.avatarRing {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-}
+
 .avatar {
-  width: 40px; height: 40px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-.avatarFallback {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--muted));
-  display: grid; place-items: center;
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--dark);           /* ← var(--dark) pas de hexa */
-}
-.authorInfo { flex: 1; min-width: 0; }
-.authorName {
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--sage-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--cream);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.authorName {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--forest);
+  letter-spacing: 0.01em;
+}
+
 .authorDate {
-  font-size: 0.67rem;
-  color: var(--muted);
-  margin-top: 3px;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--warm-gray);
+  margin-top: 0.2rem;
 }
-.googleIcon {
-  flex-shrink: 0;
-  opacity: 0.35;
-  transition: opacity 0.2s;
-}
-.card:hover .googleIcon { opacity: 0.6; }
 
-/* ─── Controls ────────────────────────────────────────── */
-.controls {
+/* ── CTA link ── */
+.cta {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 4px;
-  margin-bottom: 32px;
+  justify-content: center;
+  margin-top: 3rem;
 }
 
-.dots { display: flex; gap: 8px; align-items: center; }
-.dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: background 0.3s, transform 0.3s;
-}
-.dotActive {
-  background: var(--gold);
-  transform: scale(1.4);
-}
-
-.arrows { display: flex; gap: 8px; }
-.arrow {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted);
-  display: grid; place-items: center;
-  cursor: pointer;
-  transition: border-color 0.3s, color 0.3s, background 0.3s;
-}
-.arrow:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: color-mix(in srgb, var(--card) 90%, var(--gold) 10%);
-}
-
-/* ─── CTA ─────────────────────────────────────────────── */
-.cta { text-align: center; }
 .ctaLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 32px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
+  font-family: var(--font-sans);
   font-size: 0.75rem;
+  font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--warm-gray);
   text-decoration: none;
-  transition: border-color 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.25s;
 }
-.ctaLink:hover {
-  border-color: var(--gold);
-  color: var(--gold-light);
+.ctaLink:hover { color: var(--forest); }
+.ctaLink::after {
+  content: '→';
+  transition: transform 0.25s;
 }
-.ctaArrow { font-size: 0.9rem; transition: transform 0.2s; }
-.ctaLink:hover .ctaArrow { transform: translateX(4px); }
+.ctaLink:hover::after { transform: translateX(4px); }
 
-/* ─── Responsive ──────────────────────────────────────── */
+/* ── Navigation arrows (mobile/tablet) ── */
+.navBtn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border-light);
+  background: white;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--forest);
+  transition: border-color 0.25s, background 0.25s;
+  z-index: 2;
+}
+.navBtn:hover {
+  border-color: var(--gold);
+  background: var(--gold-muted);
+}
+.navPrev { left: -1.25rem; }
+.navNext { right: -1.25rem; }
+
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .track {
-    grid-template-columns: 1fr;
-    background: transparent;
-    gap: 2px;
-  }
-  /* Mobile : cache les cards côté, affiche uniquement la centrale */
-  .cardSide   { display: none; }
-  .cardCenter { opacity: 1; transform: scale(1); }
+  .track { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .track { grid-template-columns: 1fr; }
+  .navBtn { display: flex; }
 }

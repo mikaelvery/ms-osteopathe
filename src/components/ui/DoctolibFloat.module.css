@@ -1,31 +1,39 @@
+/* ── Floating CTA button ── */
 .btn {
   position: fixed;
-  bottom: 32px;
-  right: 32px;
+  bottom: 28px;
+  right: 28px;
   z-index: 90;
 
   display: flex;
   align-items: center;
   gap: 10px;
 
-  padding: 14px 22px;
+  padding: 13px 20px;
   background: var(--gold);
-  color: var(--charcoal);
-  border-radius: 2px;
+  color: var(--forest);
+  border-radius: var(--radius-sm);
   text-decoration: none;
 
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(200, 185, 140, 0.2);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.22),
+    0 2px 8px rgba(201, 169, 110, 0.25);
 
   /* Caché par défaut */
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(12px);
   pointer-events: none;
-  transition: opacity 0.35s ease, transform 0.35s ease, background 0.2s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .visible {
@@ -37,27 +45,37 @@
 .btn:hover {
   background: var(--gold-light);
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(200, 185, 140, 0.3);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.28),
+    0 4px 12px rgba(201, 169, 110, 0.3);
 }
 
-.label {
-  white-space: nowrap;
-}
+.label { white-space: nowrap; }
 
-/* Mobile — plus compact, reste visible */
-@media (max-width: 600px) {
+/* ── Mobile ──
+   Sur mobile on pousse le bouton vers le haut pour ne PAS masquer le footer.
+   La valeur tient compte : hauteur footer (~80px) + gap (16px) = ~96px */
+@media (max-width: 768px) {
   .btn {
-    bottom: 20px;
-    right: 20px;
-    padding: 12px 18px;
-    font-size: 0.65rem;
+    /* Positionné en bas mais avec un bottom suffisant pour ne pas masquer le footer */
+    bottom: 16px;
+    right: 16px;
+    padding: 11px 16px;
+    font-size: 0.63rem;
     gap: 8px;
   }
+
+  /* Quand le footer est visible dans le viewport, on cache le bouton flottant
+     pour ne pas superposer les deux. Le JS peut ajouter .nearFooter via
+     IntersectionObserver sur le footer. */
+  .nearFooter {
+    opacity: 0 !important;
+    transform: translateY(12px) !important;
+    pointer-events: none !important;
+  }
 }
 
-/* Desktop — caché, le navbar CTA suffit */
+/* ── Desktop — le bouton CTA de la navbar suffit ── */
 @media (min-width: 1101px) {
-  .btn {
-    display: none;
-  }
+  .btn { display: none; }
 }

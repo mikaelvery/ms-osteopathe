@@ -1,21 +1,23 @@
 import { SITE } from '@/lib/constants'
-import AnatomySvg from '@/components/ui/AnatomySvg'
+import { createClient } from '@supabase/supabase-js'
 import styles from './Hero.module.css'
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
 async function getGoogleStats() {
   try {
     const placeId = process.env.GOOGLE_PLACE_ID
-    const apiKey = process.env.GOOGLE_PLACES_API_KEY
-
+    const apiKey  = process.env.GOOGLE_PLACES_API_KEY
     if (!placeId || !apiKey) throw new Error('Missing env vars')
-
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=rating,user_ratings_total&language=fr&key=${apiKey}`
-    const res = await fetch(url, { next: { revalidate: 86400 } })
+    const res  = await fetch(url, { next: { revalidate: 86400 } })
     const data = await res.json()
-
     if (!data.result) throw new Error('No result')
-
     return {
-      total: data.result.user_ratings_total ?? null,
+      total:  data.result.user_ratings_total ?? null,
       rating: data.result.rating ?? null,
     }
   } catch {
@@ -23,46 +25,53 @@ async function getGoogleStats() {
   }
 }
 
+async function getHeroPhoto(): Promise<string | null> {
+  try {
+    // On cherche la 1ère photo portrait depuis Supabase
+    const { data } = await supabase
+      .from('gallery')
+      .select('url')
+      .eq('is_portrait', true)
+      .order('order', { ascending: true })
+      .limit(1)
+      .single()
+    return data?.url ?? null
+  } catch {
+    return null
+  }
+}
+
 export default async function Hero() {
-  const { total, rating } = await getGoogleStats()
+  const [{ total, rating }, heroPhotoUrl] = await Promise.all([
+    getGoogleStats(),
+    getHeroPhoto(),
+  ])
+
   const yearsOfExperience = new Date().getFullYear() - 2017
 
   const stats = [
-    { num: total ? `${total}+` : '—', label: 'Avis Google' },
-    { num: rating ? rating.toFixed(1) : '—', label: 'Note moyenne' },
-    { num: `${yearsOfExperience}+`, label: "Années d'expérience" },
+    { num: total  ? `${total}+`          : '276+', label: 'Avis Google'        },
+    { num: rating ? rating.toFixed(1)    : '5.0',  label: 'Note moyenne'       },
+    { num: `${yearsOfExperience}+`,                label: "Années d'expérience" },
   ]
+
+  // Photo hero : Supabase en priorité, sinon image locale
+  const photoSrc = heroPhotoUrl ?? '/images/mathieu-spaeth.png'
 
   return (
     <section className={styles.hero}>
 
-      {/* Fond glow */}
-      <div className={styles.bgGlow} aria-hidden />
-
-      {/* Vagues SVG en bas de la section */}
-      <div className={styles.waves} aria-hidden>
-        <svg
-  viewBox="0 0 1440 140"
-  xmlns="http://www.w3.org/2000/svg"
-  preserveAspectRatio="none"
->
-  <path
-    d="M0,80 C240,140 480,30 720,70 C960,120 1200,40 1440,80 L1440,140 L0,140 Z"
-    fill="rgba(255,255,255,0.05)"
-  />
-  <path
-    d="M0,100 C180,50 420,120 660,90 C900,55 1140,110 1440,95 L1440,140 L0,140 Z"
-    fill="rgba(255,255,255,0.04)"
-  />
-  <path
-    d="M0,115 C300,80 600,125 900,105 C1100,90 1300,120 1440,108 L1440,140 L0,140 Z"
-    fill="rgba(255,255,255,0.03)"
-  />
-</svg>
-      </div>
-
       {/* ── Colonne gauche ── */}
       <div className={styles.left}>
+        <div className={styles.bgGlow} aria-hidden />
+
+        <div className={styles.waves} aria-hidden>
+          <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,60 C240,100 480,20 720,55 C960,90 1200,30 1440,60 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.04)" />
+            <path d="M0,75 C180,40 420,90 660,68 C900,44 1140,84 1440,72 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.03)" />
+          </svg>
+        </div>
+
         <div className={`${styles.tag} fade-up`}>
           <span className={styles.tagDot} />
           Cabinet &amp; Domicile · Castelnau-le-Lez
@@ -100,7 +109,6 @@ export default async function Hero() {
           </a>
         </div>
 
-        {/* Stats */}
         <div className={`${styles.stats} fade-up delay-4`}>
           {stats.map((s, i) => (
             <>
@@ -113,7 +121,6 @@ export default async function Hero() {
           ))}
         </div>
 
-        {/* Badge Google */}
         <a
           href={`https://search.google.com/local/reviews?placeid=${process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ?? 'ChIJ8R2vaYSlthIRVKzkWECSW0g'}`}
           target="_blank"
@@ -126,12 +133,15 @@ export default async function Hero() {
         </a>
       </div>
 
-      {/* ── Colonne droite ── */}
+      {/* ── Colonne droite — photo ── */}
       <div className={styles.right}>
-        <div className={styles.verticalLine} />
-        <div className={styles.imageWrap}>
-          <AnatomySvg />
-        </div>
+        <span className={styles.verticalLine} aria-hidden />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={photoSrc}
+          alt="Mathieu Spaeth, ostéopathe D.O."
+          loading="eager"
+        />
       </div>
 
     </section>

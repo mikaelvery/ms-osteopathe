@@ -1,208 +1,224 @@
+/* ── Navbar ── */
 .nav {
   position: fixed;
-  top: var(--banner-height, 0px); left: 0; right: 0;
+  top: 0; left: 0; right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px clamp(24px, 4vw, 60px); /* padding latéral fluide */
-
-  /* Transparent au top — laisse respirer le hero */
-  background: transparent;
-  border-bottom: 1px solid transparent;
+  padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
   transition:
-    padding       0.4s ease,
-    background    0.4s ease,
-    border-color  0.4s ease,
-    backdrop-filter 0.4s ease;
+    background  0.4s ease,
+    backdrop-filter 0.4s ease,
+    box-shadow 0.4s ease,
+    padding 0.3s ease;
 }
 
-.nav:not(.navScrolled) .cta {
-  background: rgba(200, 185, 140, 0.08);
-  border-color: rgba(200, 185, 140, 0.6);
+/* Avant scroll : dégradé sombre sur toute la largeur
+   → garantit la lisibilité quelle que soit la couleur du hero (gauche sombre OU droite claire) */
+.nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 38, 28, 0.6) 0%,
+    transparent 100%
+  );
+  z-index: -1;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
 }
-.nav:not(.navScrolled) .cta:hover {
-  background: var(--gold);
-  border-color: var(--gold);
-  color: #1C1C1A;
-}
+.navScrolled::before { opacity: 0; }
 
+/* Scrolled state */
 .navScrolled {
-  padding: 14px clamp(24px, 4vw, 60px);
-  background: rgba(17, 18, 16, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(200, 185, 140, 0.12);
+  background: rgba(250, 247, 242, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: 0 1px 24px rgba(30, 59, 47, 0.06);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
-.navScrolled .cta {
-  background: var(--gold);
-  color: #1c2b28;
-  border-color: var(--gold);
-}
-
-.navScrolled .cta:hover {
-  background: #e8c97a;    /* or plus clair au hover */
-  border-color: #e8c97a;
-  color: #1c2b28;
-}
-/* ─── Logo ─────────────────────────────────────────────── */
+/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  color: var(--gold-light);
+  gap: 0.875rem;
   text-decoration: none;
-  line-height: 1.2;
-}
-.logo img {
-  height: 60px;   /* ← augmente ici */
-  width: auto;
-}
-.logo span {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 3px;
+  flex-shrink: 0;
 }
 
-/* ─── Desktop links ─────────────────────────────────────── */
+.logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.4s ease;
+}
+.navScrolled .logo img { filter: none; }
+
+.logo > div {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  line-height: 1.2;
+  transition: color 0.4s ease;
+}
+.navScrolled .logo > div { color: var(--forest); }
+
+.logo span {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: rgba(245, 240, 232, 0.6);
+  transition: color 0.4s ease;
+  margin-top: 2px;
+}
+.navScrolled .logo span { color: var(--warm-gray); }
+
+/* ── Desktop links ── */
 .links {
   display: flex;
-  gap: clamp(16px, 2.5vw, 36px); /* s'adapte à la largeur dispo */
-  list-style: none;
   align-items: center;
+  gap: 2.25rem;
+  list-style: none;
 }
+
 .links a {
-  text-decoration: none;
-  font-size: clamp(0.58rem, 0.8vw, 0.7rem);
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
-  transition: color 0.25s;
+  color: rgba(245, 240, 232, 0.88);
+  text-decoration: none;
+  transition: color 0.25s ease;
   position: relative;
 }
+
 .links a::after {
   content: '';
   position: absolute;
-  bottom: -3px; left: 0; right: 0;
-  height: 1px;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
   background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
+  transition: width 0.3s ease;
 }
-.links a:hover { color: var(--gold-light); }
-.links a:hover::after { transform: scaleX(1); }
 
-/* ─── CTA button ────────────────────────────────────────── */
+.links a:hover { color: #fff; }
+.links a:hover::after { width: 100%; }
+
+/* Scrollée */
+.navScrolled .links a { color: var(--warm-gray); }
+.navScrolled .links a:hover { color: var(--forest); }
+
+/* ── CTA button ── */
 .cta {
-  background: transparent;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  padding: 9px 22px;
-  border-radius: 2px;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 600;              /* ← plus gras */
-  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
-}
-.cta::after { display: none; }
-.cta:hover {
+  color: var(--forest) !important;
   background: var(--gold);
-  color: #1C1C1A;                /* ← charcoal explicite, pas de variable qui peut varier */
-  box-shadow: 0 0 20px rgba(200, 185, 140, 0.3);  /* ← halo doré au hover */
+  padding: 0.6rem 1.35rem;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.3s, transform 0.2s;
+}
+.cta::after { display: none !important; }
+.cta:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
 }
 
-/* ─── Burger ────────────────────────────────────────────── */
+/* ── Mobile burger ── */
 .burger {
   display: none;
   flex-direction: column;
+  justify-content: center;
   gap: 5px;
-  background: transparent;
+  background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
-  z-index: 101;
+  width: 36px;
+  height: 36px;
 }
+
 .burger span {
   display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--gold);
-  transition: transform 0.3s, opacity 0.3s, width 0.3s;
+  width: 22px;
+  height: 1.5px;
+  background: var(--cream);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.4s ease;
+  transform-origin: center;
 }
+.navScrolled .burger span { background: var(--forest); }
 
-/* Burger → croix */
-.burger span.burgerOpen:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.burger span.burgerOpen:nth-child(2) { opacity: 0; width: 0; }
-.burger span.burgerOpen:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.burgerOpen:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burgerOpen:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burgerOpen:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* ─── Mobile drawer ─────────────────────────────────────── */
+/* ── Mobile drawer ── */
 .drawer {
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  background: var(--ivory);
+  border-bottom: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 0; right: 0;
-  width: min(320px, 85vw);
-  height: 100vh;
-  background: var(--deep);
-  padding: 80px 40px 40px;
-  gap: 8px;
-  border-left: 1px solid var(--border);
-  animation: slideIn 0.3s cubic-bezier(.25,.8,.25,1);
-  z-index: 100;
+  padding: 1.25rem clamp(1.5rem, 5vw, 4rem) 1.75rem;
+  box-shadow: 0 20px 40px rgba(30, 59, 47, 0.1);
 }
+
 .drawer a {
-  text-decoration: none;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-  transition: color 0.25s, padding-left 0.25s;
+  color: var(--warm-gray);
+  text-decoration: none;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--border-light);
+  transition: color 0.2s;
 }
-.drawer a:hover {
-  color: var(--gold);
-  padding-left: 8px;
-}
+.drawer a:last-of-type { border-bottom: none; }
+.drawer a:hover { color: var(--forest); }
+
 .drawerCta {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  font-style: italic;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  color: var(--gold);
-  margin-top: 20px;
-  border-bottom: none;
+  margin-top: 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--forest) !important;
+  background: var(--gold);
+  padding: 0.9rem 1.5rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  text-decoration: none;
+  border: none !important;
+  transition: background 0.3s;
+  display: block;
 }
+.drawerCta:hover { background: var(--gold-light); }
 
-/* Overlay sombre derrière le drawer */
-.drawerOverlay {
-  display: none;
-}
-
-@keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
-}
-
-/* ─── Responsive ────────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .nav         { padding: 20px 24px; }
-  .navScrolled { padding: 14px 24px; }
-  .links       { display: none; }
-  .burger      { display: flex; }
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .links { display: none; }
+  .burger { display: flex; }
 }

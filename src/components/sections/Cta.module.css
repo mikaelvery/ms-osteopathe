@@ -1,42 +1,65 @@
+/* ── CTA section ── */
 .section {
-  padding: 140px 60px;
+  background: var(--forest);
+  padding: clamp(5rem, 9vw, 9rem) var(--section-px);
   text-align: center;
   position: relative;
   overflow: hidden;
 }
 
+/* Ambient glow */
 .glow {
   position: absolute;
-  width: 600px; height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(200, 185, 140, 0.05) 0%, transparent 70%);
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.08) 0%, transparent 65%);
   pointer-events: none;
+  border-radius: 50%;
 }
 
+/* Decorative lines */
+.section::before,
+.section::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold-muted), transparent);
+}
+.section::before { top: 0; height: 60px; }
+.section::after  { bottom: 0; height: 60px; }
+
+/* Title */
 .title {
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 4vw, 4.5rem);
+  font-size: clamp(2.4rem, 4.5vw, 4.8rem);
   font-weight: 300;
+  line-height: 1.1;
   color: var(--cream);
-  max-width: 700px;
-  margin: 0 auto 20px;
-  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.25rem;
   position: relative;
+  z-index: 1;
 }
+
 .title em {
   font-style: italic;
   color: var(--gold-light);
 }
 
+/* Subtitle */
 .sub {
-  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 56px;
+  margin-bottom: 2.75rem;
   position: relative;
-}
-
-@media (max-width: 768px) {
-  .section { padding: 80px 24px; }
+  z-index: 1;
 }
