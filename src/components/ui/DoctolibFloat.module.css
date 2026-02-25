@@ -1,0 +1,63 @@
+.btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 90;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 14px 22px;
+  background: var(--gold);
+  color: var(--charcoal);
+  border-radius: 2px;
+  text-decoration: none;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(200, 185, 140, 0.2);
+
+  /* Caché par défaut */
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease, background 0.2s ease;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(200, 185, 140, 0.3);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* Mobile — plus compact, reste visible */
+@media (max-width: 600px) {
+  .btn {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 18px;
+    font-size: 0.65rem;
+    gap: 8px;
+  }
+}
+
+/* Desktop — caché, le navbar CTA suffit */
+@media (min-width: 1101px) {
+  .btn {
+    display: none;
+  }
+}

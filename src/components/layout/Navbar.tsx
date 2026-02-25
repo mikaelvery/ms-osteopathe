@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { NAV_LINKS, SITE } from '@/lib/constants'
 import styles from './Navbar.module.css'
+import Image from 'next/image'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -19,8 +20,15 @@ export default function Navbar() {
     <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`}>
       {/* Logo */}
       <Link href="/" className={styles.logo}>
-        {SITE.name}
-        <span>Ostéopathe D.O. — Castelnau-le-Lez</span>
+        <img
+          src="/images/logo-symbole.svg"
+          alt=""
+          style={{ height: '44px', width: 'auto', display: 'block' }}
+        />
+        <div>
+          {SITE.name}
+          <span>Ostéopathe D.O. — Castelnau-le-Lez</span>
+        </div>
       </Link>
 
       {/* Desktop links */}

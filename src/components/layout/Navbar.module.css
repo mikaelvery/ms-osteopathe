@@ -1,6 +1,6 @@
 .nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: var(--banner-height, 0px); left: 0; right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -17,6 +17,16 @@
     backdrop-filter 0.4s ease;
 }
 
+.nav:not(.navScrolled) .cta {
+  background: rgba(200, 185, 140, 0.08);
+  border-color: rgba(200, 185, 140, 0.6);
+}
+.nav:not(.navScrolled) .cta:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #1C1C1A;
+}
+
 .navScrolled {
   padding: 14px clamp(24px, 4vw, 60px);
   background: rgba(17, 18, 16, 0.94);
@@ -25,8 +35,22 @@
   border-bottom: 1px solid rgba(200, 185, 140, 0.12);
 }
 
+.navScrolled .cta {
+  background: var(--gold);
+  color: #1c2b28;
+  border-color: var(--gold);
+}
+
+.navScrolled .cta:hover {
+  background: #e8c97a;    /* or plus clair au hover */
+  border-color: #e8c97a;
+  color: #1c2b28;
+}
 /* ─── Logo ─────────────────────────────────────────────── */
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-serif);
   font-size: 1.15rem;
   font-weight: 400;
@@ -34,6 +58,10 @@
   color: var(--gold-light);
   text-decoration: none;
   line-height: 1.2;
+}
+.logo img {
+  height: 60px;   /* ← augmente ici */
+  width: auto;
 }
 .logo span {
   display: block;
@@ -86,13 +114,14 @@
   font-size: 0.65rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  font-weight: 500;
-  transition: background 0.25s, color 0.25s;
+  font-weight: 600;              /* ← plus gras */
+  transition: background 0.25s, color 0.25s, box-shadow 0.25s;
 }
-.cta::after { display: none; } /* pas de soulignement sur le CTA */
+.cta::after { display: none; }
 .cta:hover {
   background: var(--gold);
-  color: var(--charcoal);
+  color: #1C1C1A;                /* ← charcoal explicite, pas de variable qui peut varier */
+  box-shadow: 0 0 20px rgba(200, 185, 140, 0.3);  /* ← halo doré au hover */
 }
 
 /* ─── Burger ────────────────────────────────────────────── */

@@ -10,10 +10,11 @@ import styles from './layout.module.css'
 const BASE_PATH = '/qs-osteo-backoffice'
 
 const NAV = [
-  { href: BASE_PATH,                    icon: '⊞', label: 'Tableau de bord' },
-  { href: `${BASE_PATH}/gallery`,       icon: '◫', label: 'Galerie photos'  },
-  { href: `${BASE_PATH}/hours`,         icon: '◷', label: 'Horaires'        },
-  { href: `${BASE_PATH}/testimonials`,  icon: '◈', label: 'Témoignages'     },
+  { href: BASE_PATH,                  icon: '⊞', label: 'Tableau de bord' },
+  { href: `${BASE_PATH}/gallery`,     icon: '◫', label: 'Galerie photos'  },
+  { href: `${BASE_PATH}/hours`,       icon: '◷', label: 'Horaires'        },
+  { href: `${BASE_PATH}/banner`,      icon: '⚑', label: 'Bandeau'         },
+  { href: `${BASE_PATH}/blog`,        icon: '✎', label: 'Blog'            },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -1,7 +1,35 @@
-import { SITE, HOURS } from '@/lib/constants'
+import { createClient } from '@supabase/supabase-js'
 import styles from './Contact.module.css'
+import { SITE, HOURS_FALLBACK } from '@/lib/constants'
 
-export default function Contact() {
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+
+interface Hour {
+  id: number
+  day: string
+  hours: string | null
+  order: number
+}
+
+async function getHours(): Promise<Hour[]> {
+  const { data } = await supabase
+    .from('hours')
+    .select('*')
+    .order('order', { ascending: true })
+
+  return data ?? HOURS_FALLBACK.map((h, i) => ({
+    id: i,
+    ...h,
+    order: i 
+  }))
+}
+
+export default async function Contact() {
+  const hours = await getHours()
+
   return (
     <section className={styles.section} id="contact">
       <p className="section-tag">Informations pratiques</p>
@@ -14,7 +42,7 @@ export default function Contact() {
         <div>
           <h3 className={styles.blockTitle}>Horaires de consultation</h3>
           <ul className={styles.hoursList}>
-            {HOURS.map((h) => (
+            {hours.map((h) => (
               <li key={h.day} className={styles.hoursItem}>
                 <span className={styles.day}>{h.day}</span>
                 {h.hours ? (
@@ -27,7 +55,7 @@ export default function Contact() {
           </ul>
         </div>
 
-        {/* Coordinates */}
+        {/* Coordonnées */}
         <div>
           <h3 className={styles.blockTitle}>Coordonnées</h3>
           <div className={styles.contactInfo}>

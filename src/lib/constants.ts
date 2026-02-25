@@ -7,7 +7,7 @@ export const SITE = {
   phoneRaw: '0615938474',
   email: 'contact@ms-osteopathe.fr',
   address: {
-    street: '500 Avenue de l\'Europe',
+    street: "500 Avenue de l'Europe",
     complement: 'Fitfamily, Castelnau-le-Lez',
   },
   doctolib: 'https://www.doctolib.fr/osteopathe/le-cres/mathieu-spaeth',
@@ -23,12 +23,6 @@ export const NAV_LINKS = [
   { label: 'Cabinet',     href: '#galerie'  },
   { label: 'Avis',        href: '#avis'     },
   { label: 'Contact',     href: '#contact'  },
-]
-
-export const STATS = [
-  // { num: '276+', label: 'Avis Google'       },
-  // { num: '5.0',  label: 'Note moyenne'      },
-  { num: '10+',  label: 'Années d\'expérience' },
 ]
 
 export const SERVICES = [
@@ -68,17 +62,18 @@ export const QUALITIES = [
 ]
 
 export const PRACTITIONER_DETAILS = [
-  { label: 'Formation',     value: 'Ostéopathe D.O. — Diplômé d\'État' },
+  { label: 'Formation',     value: "Ostéopathe D.O. — Diplômé d'État" },
   { label: 'Spécialités',   value: 'Structurelle · Viscérale · Crânienne' },
   { label: 'Interventions', value: 'Cabinet & domicile' },
 ]
 
-export const HOURS = [
-  { day: 'Lundi',     hours: '09h00 – 13h30' },
-  { day: 'Mardi',     hours: '09h00 – 19h00' },
-  { day: 'Mercredi',  hours: '13h30 – 19h00' },
-  { day: 'Jeudi',     hours: '09h00 – 19h00' },
-  { day: 'Vendredi',  hours: '09h00 – 13h30' },
-  { day: 'Samedi',    hours: '09h00 – 13h30' },
-  { day: 'Dimanche',  hours: null             },
+// Fallback local — utilisé uniquement si Supabase est indisponible
+export const HOURS_FALLBACK = [
+  { day: 'Lundi',    hours: '09h00 – 13h30' },
+  { day: 'Mardi',    hours: '09h00 – 19h00' },
+  { day: 'Mercredi', hours: '13h30 – 19h00' },
+  { day: 'Jeudi',    hours: '09h00 – 19h00' },
+  { day: 'Vendredi', hours: '09h00 – 13h30' },
+  { day: 'Samedi',   hours: '09h00 – 13h30' },
+  { day: 'Dimanche', hours: null             },
 ]

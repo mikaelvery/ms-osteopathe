@@ -8,6 +8,7 @@ import Gallery     from '@/components/sections/Gallery'
 import Contact     from '@/components/sections/Contact'
 import Testimonials from '@/components/sections/Testimonials'
 import Cta         from '@/components/sections/Cta'
+import BlogPreview from '@/components/sections/BlogPreview'
 
 export default function HomePage() {
   return (
@@ -21,6 +22,7 @@ export default function HomePage() {
         <Testimonials />
         <Portrait />
         <Gallery />
+        <BlogPreview />
         <Cta />
       </main>
       <Footer />

@@ -16,11 +16,18 @@ const CARDS = [
     cta: 'Modifier les horaires',
   },
   {
-    icon: '◈',
-    title: 'Témoignages',
-    desc: 'Ajoutez de nouveaux avis patients et masquez ceux que vous ne souhaitez pas afficher.',
-    href: '/qs-osteo-backoffice/testimonials',
-    cta: 'Gérer les témoignages',
+    icon: '⚑',
+    title: 'Bandeau d\'annonce',
+    desc: 'Affichez un message temporaire sur le site — congés, fermeture exceptionnelle, nouveau créneau.',
+    href: '/qs-osteo-backoffice/banner',
+    cta: 'Gérer le bandeau',
+  },
+  {
+    icon: '✎',
+    title: 'Blog',
+    desc: 'Publiez des articles pour améliorer votre référencement Google local.',
+    href: '/qs-osteo-backoffice/blog',
+    cta: 'Gérer les articles',
   },
 ]
 

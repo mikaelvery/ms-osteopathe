@@ -63,27 +63,6 @@ src/appqs-osteo-backoffice/testimonials/page.tsx    → appqs-osteo-backoffice/t
 
 ---
 
-## 🔄 Connecter l'admin au site public
-
-Pour que le site affiche les données dynamiques (galerie, horaires, témoignages),
-remplace dans les composants concernés les données statiques de `constants.ts`
-par des appels Supabase côté serveur :
-
-```tsx
-// src/components/sections/Gallery.tsx
-import { supabase } from '@/lib/supabase'
-
-export default async function Gallery() {
-  const { data: images } = await supabase
-    .from('gallery')
-    .select('*')
-    .order('order', { ascending: true })
-
-  // ... utilise images au lieu de GALLERY_IMAGES
-}
-```
-
----
 
 ## 🌐 URL d'accès
 
