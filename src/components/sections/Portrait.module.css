@@ -11,11 +11,6 @@
   align-items: center;
 }
 
-/* ── Text column ── */
-.text {}
-
-/* Section tag & title : inherit globals (ivory bg → dark) */
-
 .desc {
   font-size: 0.97rem;
   line-height: 1.78;
@@ -26,7 +21,6 @@
   max-width: 460px;
 }
 
-/* ── Details (dl) ── */
 .details {
   display: flex;
   flex-direction: column;
@@ -64,26 +58,22 @@
 /* ── Masonry images ── */
 .masonry {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: 3fr 2fr;
   gap: 6px;
+  height: 480px;
 }
 
-/* Main portrait — spans 2 rows on left */
 .mainImg {
   grid-column: 1;
   grid-row: 1 / 3;
   position: relative;
-  aspect-ratio: 3 / 4;
   overflow: hidden;
   border-radius: var(--radius-sm);
 }
 
-/* Thumbnails — stacked right */
 .thumb {
   grid-column: 2;
   position: relative;
-  aspect-ratio: 4 / 3;
   overflow: hidden;
   border-radius: var(--radius-sm);
 }
@@ -101,7 +91,6 @@
   filter: saturate(0.95) contrast(1.04);
 }
 
-/* Caption overlay */
 .overlay {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -123,20 +112,37 @@
 }
 
 /* ── Responsive ── */
+
+/* Tablette + mobile : texte au-dessus, images en dessous */
 @media (max-width: 1024px) {
   .inner {
     grid-template-columns: 1fr;
-    gap: 3.5rem;
+    gap: 3rem;
   }
 
   .masonry {
-    max-width: 520px;
+    width: 100%;
+    max-width: 100%;
+    height: 420px;
     margin: 0 auto;
   }
 }
 
+/* Mobile uniquement */
 @media (max-width: 640px) {
-  .masonry { gap: 4px; }
-  .detailItem { flex-direction: column; gap: 0.25rem; }
+  .inner {
+    gap: 2rem;
+  }
+
+  .masonry {
+    height: 260px;
+    gap: 4px;
+  }
+
+  .detailItem {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
   .detailLabel { min-width: auto; }
 }

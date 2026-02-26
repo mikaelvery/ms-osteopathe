@@ -16,8 +16,8 @@ export default async function Portrait() {
     .order('order', { ascending: true })
     .limit(3)
 
-  const mainImg = portraitImgs?.[0]
-  const thumbs  = portraitImgs?.slice(1) ?? []
+  // thumbs = images Supabase seulement (pas la photo principale locale)
+  const thumbs = portraitImgs ?? []
 
   return (
     <section className={styles.section} id="portrait">
@@ -40,19 +40,30 @@ export default async function Portrait() {
           </dl>
         </div>
 
-       <div className={styles.masonry}>
-          {/* Photo principale — toujours la locale */}
+        <div className={styles.masonry}>
+          {/* Photo principale — toujours locale */}
           <div className={styles.mainImg}>
-            <Image src="/images/mathieu-spaeth.png" alt="Mathieu Spaeth" fill
-              sizes="(max-width: 900px) 50vw, 30vw" className={styles.img} priority />
+            <Image
+              src="/images/mathieu-spaeth.png"
+              alt="Mathieu Spaeth"
+              fill
+              sizes="(max-width: 640px) 55vw, (max-width: 1024px) 40vw, 28vw"
+              className={styles.img}
+              priority
+            />
             <div className={styles.overlay}><span>Mathieu Spaeth</span></div>
           </div>
 
-          {/* Thumbs — depuis Supabase */}
-          {portraitImgs?.map((t) => (
+          {/* Thumbs Supabase — max 2 affichées */}
+          {thumbs.slice(0, 2).map((t) => (
             <div key={t.id} className={styles.thumb}>
-              <Image src={t.url} alt={t.label || 'Soin'} fill
-                sizes="(max-width: 900px) 50vw, 20vw" className={styles.img} />
+              <Image
+                src={t.url}
+                alt={t.label || 'Soin'}
+                fill
+                sizes="(max-width: 640px) 40vw, (max-width: 1024px) 30vw, 18vw"
+                className={styles.img}
+              />
             </div>
           ))}
         </div>
