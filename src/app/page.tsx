@@ -1,29 +1,29 @@
-import Navbar      from '@/components/layout/Navbar'
-import Footer      from '@/components/layout/Footer'
-import Hero        from '@/components/sections/Hero'
-import Services    from '@/components/sections/Services'
-import About       from '@/components/sections/About'
-import Portrait    from '@/components/sections/Portrait'
-import Gallery     from '@/components/sections/Gallery'
-import Contact     from '@/components/sections/Contact'
+import Navbar       from '@/components/layout/Navbar'
+import Footer       from '@/components/layout/Footer'
+import Hero         from '@/components/sections/Hero'
+import Portrait     from '@/components/sections/Portrait'
+import Services     from '@/components/sections/Services'
+import WhyMe        from '@/components/sections/WhyMe'
+import Gallery      from '@/components/sections/Gallery'
 import Testimonials from '@/components/sections/Testimonials'
-import Cta         from '@/components/sections/Cta'
-import BlogPreview from '@/components/sections/BlogPreview'
+import BlogPreview  from '@/components/sections/BlogPreview'
+import Contact      from '@/components/sections/Contact'
+import Cta          from '@/components/sections/Cta'
 
 export default function HomePage() {
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
-        <Services />
-        <About />
-        <Contact />
-        <Testimonials />
-        <Portrait />
-        <Gallery />
-        <BlogPreview />
-        <Cta />
+        <Hero />         {/* dark  — forest   */}
+        <Portrait />     {/* light — ivory    */}
+        <Services />     {/* light — cream    */}
+        <WhyMe />        {/* dark  — forest   */}
+        <Gallery />      {/* dark  — forest   */}
+        <Testimonials /> {/* light — ivory    */}
+        <BlogPreview />  {/* light — cream    */}
+        <Contact />      {/* dark  — forest   */}
+        <Cta />          {/* dark  — forest   */}
       </main>
       <Footer />
     </>

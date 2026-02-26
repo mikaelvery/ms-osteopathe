@@ -1,0 +1,155 @@
+/* ── WhyMe / 3 raisons ── */
+.section {
+  background: var(--forest);
+  padding: var(--section-py) var(--section-px);
+  text-align: center;
+}
+
+/* ── Header ligne + tag ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.headerLine {
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: rgba(201, 169, 110, 0.3);
+}
+
+.headerTag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ── Title ── */
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-bottom: 4rem;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5px;
+  background: rgba(201, 169, 110, 0.1);
+  border: 1px solid rgba(201, 169, 110, 0.1);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ── Card ── */
+.card {
+  background: rgba(15, 30, 22, 0.6);
+  padding: 3rem 2.5rem 2.5rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  transition: background 0.35s ease;
+}
+
+.card:hover {
+  background: rgba(201, 169, 110, 0.05);
+}
+
+/* ── Card top row ── */
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.cardNum {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: rgba(201, 169, 110, 0.45);
+}
+
+.cardIcon {
+  color: var(--gold);
+  opacity: 0.7;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.card:hover .cardIcon {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* ── Card content ── */
+.cardTitle {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+
+.cardDesc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--muted);
+  font-weight: 300;
+  flex: 1;
+}
+
+/* ── Bottom bar — apparaît au hover ── */
+.cardBar {
+  height: 1px;
+  background: var(--gold);
+  margin-top: 2rem;
+  width: 0;
+  transition: width 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card:hover .cardBar {
+  width: 40px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+
+  .card {
+    padding: 2.25rem 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .title {
+    margin-bottom: 2.5rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+  }
+}

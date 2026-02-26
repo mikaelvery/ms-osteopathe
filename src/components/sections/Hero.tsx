@@ -1,5 +1,4 @@
 import { SITE } from '@/lib/constants'
-import AnatomySvg from '@/components/ui/AnatomySvg'
 import styles from './Hero.module.css'
 
 async function getGoogleStats() {
@@ -11,10 +10,7 @@ async function getGoogleStats() {
     const res  = await fetch(url, { next: { revalidate: 86400 } })
     const data = await res.json()
     if (!data.result) throw new Error('No result')
-    return {
-      total:  data.result.user_ratings_total ?? null,
-      rating: data.result.rating ?? null,
-    }
+    return { total: data.result.user_ratings_total ?? null, rating: data.result.rating ?? null }
   } catch {
     return { total: null, rating: null }
   }
@@ -23,62 +19,44 @@ async function getGoogleStats() {
 export default async function Hero() {
   const { total, rating } = await getGoogleStats()
   const yearsOfExperience = new Date().getFullYear() - 2017
-
   const stats = [
-    { num: total  ? `${total}+`       : '276+', label: 'Avis Google'        },
-    { num: rating ? rating.toFixed(1) : '5.0',  label: 'Note moyenne'       },
+    { num: total  ? `${total}+`       : '276+', label: 'Avis Google' },
+    { num: rating ? rating.toFixed(1) : '5.0',  label: 'Note moyenne' },
     { num: `${yearsOfExperience}+`,              label: "Années d'expérience" },
   ]
-
   return (
     <section className={styles.hero}>
-        {/* Vagues sur toute la largeur */}
-        <div className={styles.waves} aria-hidden>
-          <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-            <path d="M0,60 C240,100 480,20 720,55 C960,90 1200,30 1440,60 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.04)" />
-            <path d="M0,75 C180,40 420,90 660,68 C900,44 1140,84 1440,72 L1440,100 L0,100 Z" fill="rgba(255,255,255,0.03)" />
-          </svg>
-        </div>
-
-        <div className={styles.left}>
-
+      <div className={styles.grain} aria-hidden />
+      <div className={styles.glow} aria-hidden />
+      <div className={styles.waves} aria-hidden>
+        <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0,60 C240,100 480,20 720,55 C960,90 1200,30 1440,60 L1440,120 L0,120 Z" fill="rgba(245,240,232,0.04)" />
+          <path d="M0,80 C180,45 420,95 660,72 C900,48 1140,88 1440,76 L1440,120 L0,120 Z" fill="rgba(245,240,232,0.03)" />
+          <path d="M0,100 C300,75 600,110 900,90 C1100,75 1300,100 1440,95 L1440,120 L0,120 Z" fill="rgba(245,240,232,0.025)" />
+        </svg>
+      </div>
+      <div className={styles.inner}>
         <div className={`${styles.tag} fade-up`}>
           <span className={styles.tagDot} />
-          Cabinet &amp; Domicile · Castelnau-le-Lez
+          Ostéopathe D.O · Cabinet &amp; Domicile · Castelnau-le-Lez
         </div>
-
         <h1 className={`${styles.title} fade-up delay-1`}>
-          Soigner,<br />
-          <em>écouter,</em><br />
-          libérer.
+          écouter,<br /><em>Soulager,</em><br />libérer.
         </h1>
-
-        <p className={`${styles.subtitle} fade-up delay-2`}>
-          Ostéopathie structurelle, viscérale &amp; crânienne
+        <p className={`${styles.desc} fade-up delay-2`}>
+          Sur rendez-vous, je vous accueille du lundi au samedi au sein du cabinet
+          de la salle Fitfamily, 500 Avenue de l'Europe à Castelnau-le-Lez,
+          ou me déplace à votre domicile. Ne laissez plus vos douleurs physiques
+          envahir votre quotidien — vos problématiques ont une solution.
         </p>
-
-        <p className={`${styles.desc} fade-up delay-3`}>
-          Ne laissez plus vos douleurs physiques envahir votre quotidien.
-          Chaque consultation est une approche globale, précise et humaine —
-          pour retrouver le mouvement naturel de votre corps.
-        </p>
-
-        <div className={`${styles.actions} fade-up delay-4`}>
-          <a
-            href={SITE.doctolib}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.btnPrimary}
-          >
-            Prendre rendez-vous
-            <ArrowIcon />
+        <div className={`${styles.actions} fade-up delay-3`}>
+          <a href={SITE.doctolib} target="_blank" rel="noopener noreferrer" className={styles.btnPrimary}>
+            Prendre rendez-vous<ArrowIcon />
           </a>
           <a href={`tel:${SITE.phoneRaw}`} className={styles.btnGhost}>
-            <span>☏</span>
-            {SITE.phone}
+            <span>☏</span>{SITE.phone}
           </a>
         </div>
-
         <div className={`${styles.stats} fade-up delay-4`}>
           {stats.map((s, i) => (
             <>
@@ -90,11 +68,9 @@ export default async function Hero() {
             </>
           ))}
         </div>
-
         <a
           href={`https://search.google.com/local/reviews?placeid=${process.env.NEXT_PUBLIC_GOOGLE_PLACE_ID ?? 'ChIJ8R2vaYSlthIRVKzkWECSW0g'}`}
-          target="_blank"
-          rel="noopener noreferrer"
+          target="_blank" rel="noopener noreferrer"
           className={`${styles.googleBadge} fade-up delay-4`}
         >
           <GoogleIcon />
@@ -102,15 +78,6 @@ export default async function Hero() {
           <span className={styles.googleText}>Voir les avis Google</span>
         </a>
       </div>
-
-      {/* ── Colonne droite — squelette SVG ── */}
-      <div className={styles.right}>
-        <span className={styles.verticalLine} aria-hidden />
-        <div className={styles.imageWrap}>
-          <AnatomySvg />
-        </div>
-      </div>
-
     </section>
   )
 }
@@ -122,7 +89,6 @@ function ArrowIcon() {
     </svg>
   )
 }
-
 function GoogleIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
