@@ -2,7 +2,7 @@
   position: relative;
 }
 
-/* ─── Fades latéraux ─────────────────────────────────────── */
+/* ─── Fades latéraux — adaptés au fond ivory ── */
 .fade {
   position: absolute;
   top: 0;
@@ -13,24 +13,24 @@
 }
 .fadeLeft {
   left: 0;
-  background: linear-gradient(to right, var(--forest) 0%, transparent 100%);
+  background: linear-gradient(to right, var(--ivory) 0%, transparent 100%);
 }
 .fadeRight {
   right: 0;
-  background: linear-gradient(to left, var(--forest) 0%, transparent 100%);
+  background: linear-gradient(to left, var(--ivory) 0%, transparent 100%);
 }
 
-/* ─── Flèches ────────────────────────────────────────────── */
+/* ─── Flèches ─── */
 .arrow {
   position: absolute;
   top: calc(clamp(280px, 38vh, 500px) / 2);
   transform: translateY(-50%);
   z-index: 10;
-  width: 88px;           /* presque double */
+  width: 88px;
   height: 88px;
-  background: var(--charcoal);    /* fond très sombre */
+  background: var(--forest);
   border: none;
-  color: var(--cream);            /* flèche crème */
+  color: var(--cream);
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -38,27 +38,15 @@
   pointer-events: none;
   transition: opacity 0.15s ease;
 }
-/* Flèche gauche — collée au bord gauche de l'écran */
-.arrowLeft  {
-  left: 0;
-}
-/* Flèche droite — collée au bord droit */
-.arrowRight {
-  right: 0;
-}
+.arrowLeft  { left: 0; }
+.arrowRight { right: 0; }
+.arrowShow  { opacity: 1; pointer-events: auto; }
+.arrow:hover { background: var(--sage); }
 
-.arrowShow {
-  opacity: 1;
-  pointer-events: auto;
-}
-.arrow:hover {
-  background: var(--forest);
-}
-
-/* ─── Track ──────────────────────────────────────────────── */
+/* ─── Track ─── */
 .track {
   display: flex;
-  align-items: flex-start;   /* texte et images démarrent au même niveau */
+  align-items: flex-start;
   gap: 16px;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -74,7 +62,7 @@
 }
 .track::-webkit-scrollbar { display: none; }
 
-/* ─── Slide texte ────────────────────────────────────────── */
+/* ─── Slide texte ─── */
 .textSlide {
   flex: 0 0 auto;
   width: clamp(200px, 22vw, 320px);
@@ -84,14 +72,13 @@
   cursor: default;
 }
 
-/* Tag "Le cabinet" — même style que .section-tag global */
 .tag {
   font-family: var(--font-mono);
   font-size: 0.58rem;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--forest);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -102,7 +89,7 @@
   display: block;
   width: 28px;
   height: 1px;
-  background: var(--gold);
+  background: var(--forest);
 }
 
 .textTitle {
@@ -110,7 +97,7 @@
   font-size: clamp(1.8rem, 2.6vw, 3rem);
   font-weight: 300;
   line-height: 1.1;
-  color: var(--cream);
+  color: var(--forest);
   letter-spacing: -0.015em;
   margin-bottom: 1.25rem;
 }
@@ -118,15 +105,15 @@
 .textDesc {
   font-size: 0.86rem;
   line-height: 1.85;
-  color: var(--muted);
+  color: var(--warm-gray);
   font-weight: 300;
 }
 
 .textDivider {
   width: 20px;
   height: 1px;
-  background: var(--gold);
-  opacity: 0.4;
+  background: var(--forest);
+  opacity: 0.25;
   margin: 1.5rem 0 0.75rem;
 }
 
@@ -135,10 +122,11 @@
   font-size: 0.52rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.2);
+  color: var(--warm-gray);
+  opacity: 0.5;
 }
 
-/* ─── Slide photo ────────────────────────────────────────── */
+/* ─── Slide photo ─── */
 .slide {
   flex: 0 0 auto;
   width: clamp(240px, 30vw, 460px);
@@ -181,13 +169,13 @@
   font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 400;
-  color: var(--cream);
+  color: var(--warm-gray);
   line-height: 1.4;
 }
 
 .endPad { flex: 0 0 var(--section-px); }
 
-/* ─── Mobile layout séparé ───────────────────────────────── */
+/* ─── Mobile ─── */
 .mobileLayout { display: none; }
 
 @media (max-width: 768px) {

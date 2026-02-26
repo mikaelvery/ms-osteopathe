@@ -19,11 +19,13 @@ export const SITE = {
 }
 
 export const NAV_LINKS = [
-  { label: 'Soins', href: '#services' },
-  { label: 'À propos',    href: '#about'    },
-  { label: 'Cabinet',     href: '#galerie'  },
-  { label: 'Avis',        href: '#avis'     },
-  { label: 'Contact',     href: '#contact'  },
+  { label: 'Présentation', href: '#services'  },
+  { label: 'À propos',     href: '/a-propos'  },
+  { label: 'Cabinet',      href: '#galerie'   },
+  { label: 'Avis',         href: '#avis'      },
+  { label: 'FAQ',          href: '/faq'       },
+  { label: 'Blog',         href: '/blog'      },
+  { label: 'Contact',      href: '#contact'   },
 ]
 
 export const SERVICES = [

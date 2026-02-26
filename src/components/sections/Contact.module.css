@@ -4,8 +4,6 @@
   padding: var(--section-py) var(--section-px);
 }
 
-/* Section tag & title inherit global styles (on ivory bg, they're dark) */
-
 /* ── Grid ── */
 .grid {
   display: grid;
@@ -27,7 +25,6 @@
   position: relative;
   padding-bottom: 1rem;
 }
-
 .blockTitle::after {
   content: '';
   position: absolute;
@@ -37,6 +34,8 @@
   background: var(--gold);
 }
 
+.blockTitleSpaced { margin-top: 2.5rem; }
+
 /* ── Hours list ── */
 .hoursList {
   list-style: none;
@@ -44,7 +43,6 @@
   flex-direction: column;
   gap: 0;
 }
-
 .hoursItem {
   display: flex;
   justify-content: space-between;
@@ -56,15 +54,12 @@
   color: var(--warm-gray);
   transition: color 0.2s;
 }
-
 .hoursItem:last-child { border-bottom: none; }
 .hoursItem:hover { color: var(--forest); }
-
 .day {
   font-weight: 400;
   color: var(--forest);
 }
-
 .closed {
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -79,13 +74,11 @@
   flex-direction: column;
   gap: 1.25rem;
 }
-
 .contactItem {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
 }
-
 .contactIcon {
   display: flex;
   align-items: center;
@@ -100,12 +93,10 @@
   background: white;
   transition: border-color 0.25s, color 0.25s;
 }
-
 .contactItem:hover .contactIcon {
   border-color: var(--gold);
   color: var(--gold);
 }
-
 .contactItem a,
 .contactItem span {
   font-size: 0.9rem;
@@ -116,7 +107,6 @@
   text-decoration: none;
   transition: color 0.2s;
 }
-
 .contactItem a:hover { color: var(--forest); }
 
 /* ── CTA block ── */
@@ -128,17 +118,35 @@
   margin-bottom: 1.75rem;
 }
 
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
+/* ── Google Maps ── */
+.mapWrap {
+  width: 100%;
+  height: 280px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  margin-bottom: 0.875rem;
 }
 
+.mapLink {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  text-decoration: none;
+  opacity: 0.55;
+  transition: opacity 0.2s, color 0.2s;
+}
+.mapLink:hover { opacity: 1; color: var(--forest); }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+}
 @media (max-width: 640px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
+  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .mapWrap { height: 220px; }
 }

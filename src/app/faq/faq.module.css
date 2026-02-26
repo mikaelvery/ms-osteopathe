@@ -1,0 +1,208 @@
+/* ── Page FAQ ── */
+.main { min-height: 100vh; }
+
+/* Hero */
+.hero {
+  background: var(--forest);
+  padding: 8rem var(--section-px) 5rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(201, 169, 110, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.heroInner { max-width: 760px; }
+
+.back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.3);
+  text-decoration: none;
+  margin-bottom: 3rem;
+  transition: color 0.2s;
+}
+.back:hover { color: rgba(245, 240, 232, 0.7); }
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+.title em { font-style: italic; color: var(--gold-light); }
+
+.subtitle {
+  font-size: 0.97rem;
+  line-height: 1.75;
+  color: var(--muted);
+  font-weight: 300;
+  max-width: 520px;
+}
+
+/* Content */
+.content {
+  background: var(--ivory);
+  padding: var(--section-py) var(--section-px);
+}
+
+.contentInner {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+/* Section */
+.section { display: flex; flex-direction: column; gap: 0; }
+
+.sectionTitle {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--forest);
+  opacity: 0.45;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Accordion */
+.questions { display: flex; flex-direction: column; }
+
+.item {
+  border-bottom: 1px solid var(--border-light);
+}
+.item:first-child { border-top: 1px solid var(--border-light); }
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--forest);
+  line-height: 1.4;
+  letter-spacing: -0.005em;
+  transition: color 0.2s;
+  user-select: none;
+}
+.question::-webkit-details-marker { display: none; }
+.question:hover { color: var(--gold); }
+
+.icon {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--gold);
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: transform 0.3s, opacity 0.2s;
+  line-height: 1;
+}
+.item[open] .icon {
+  transform: rotate(45deg);
+  opacity: 1;
+}
+
+.answer {
+  font-size: 0.93rem;
+  line-height: 1.82;
+  color: var(--warm-gray);
+  font-weight: 300;
+  padding: 0 0 1.5rem 0;
+  max-width: 640px;
+}
+
+/* CTA bas */
+.cta {
+  padding: 3rem 0 0;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ctaText {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--forest);
+  letter-spacing: -0.01em;
+}
+
+.ctaActions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+  color: var(--forest);
+  background: transparent;
+  transition: border-color 0.25s, color 0.25s, background 0.25s;
+  white-space: nowrap;
+}
+.ctaBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.ctaBtnPrimary {
+  background: var(--forest);
+  color: var(--cream);
+  border-color: var(--forest);
+}
+.ctaBtnPrimary:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--forest);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .content { padding: 3rem 1.5rem; }
+  .cta { flex-direction: column; align-items: flex-start; }
+  .question { font-size: 0.97rem; }
+}

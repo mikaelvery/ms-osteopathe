@@ -10,7 +10,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 )
 
-export const revalidate = 3600
+export const revalidate = 60
 
 interface Props {
   params: { slug: string }
@@ -19,7 +19,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data } = await supabase
     .from('posts')
-    .select('title, excerpt, cover_image')
+    .select('id, title, slug, excerpt, published_at, cover_image')
     .eq('slug', params.slug)
     .single()
 

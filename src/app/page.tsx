@@ -19,8 +19,8 @@ export default function HomePage() {
         <Portrait />     {/* light — ivory    */}
         <Services />     {/* light — cream    */}
         <WhyMe />        {/* dark  — forest   */}
-        <Gallery />      {/* dark  — forest   */}
-        <Testimonials /> {/* light — ivory    */}
+        <Gallery />      {/* dark  — ivory   */}
+        <Testimonials /> {/* light — warm-white    */}
         <BlogPreview />  {/* light — cream    */}
         <Contact />      {/* dark  — forest   */}
         <Cta />          {/* dark  — forest   */}

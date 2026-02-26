@@ -1,21 +1,21 @@
+/* ── Gallery / Le cabinet ── */
 .section {
-  background: var(--forest);
+  background: var(--ivory);
   padding: var(--section-py) 0;
   overflow: clip;
 }
 
 .section :global(.section-tag) {
-  color: var(--gold);
-  margin-bottom: 1.5rem;   /* moins d'espace entre le tag et le carousel */
+  color: var(--forest);
 }
-.section :global(.section-tag)::before { background: var(--gold); }
-.section :global(.section-title) { color: var(--cream); }
-.section :global(.section-title) em { color: var(--gold-light); }
+.section :global(.section-tag)::before { background: var(--forest); }
+.section :global(.section-title) { color: var(--forest); }
+.section :global(.section-title) em { color: var(--forest); font-style: italic; }
 
-/* ── Layout : colonne header plus large ── */
+/* ── Layout : colonne header + carousel ── */
 .layout {
   display: grid;
-  grid-template-columns: 420px 1fr;   /* plus large → texte plus lisible */
+  grid-template-columns: 420px 1fr;
   align-items: start;
 }
 
@@ -30,7 +30,7 @@
 .desc {
   font-size: 0.92rem;
   line-height: 1.85;
-  color: var(--muted);
+  color: var(--warm-gray);
   font-weight: 300;
   margin-top: 1.5rem;
   max-width: 320px;
@@ -39,8 +39,8 @@
 .headerDivider {
   width: 28px;
   height: 1px;
-  background: var(--gold);
-  opacity: 0.4;
+  background: var(--forest);
+  opacity: 0.3;
   margin: 2rem 0 1rem;
 }
 
@@ -49,19 +49,20 @@
   font-size: 0.57rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.22);
+  color: var(--warm-gray);
+  opacity: 0.6;
 }
 
 /* ── Carousel ── */
 .carouselArea {
   min-width: 0;
-  overflow: visible;    /* laisse le track déborder */
+  overflow: visible;
   padding-top: 0.5rem;
 }
 
 .empty {
   font-size: 0.9rem;
-  color: var(--muted);
+  color: var(--warm-gray);
   padding: 4rem var(--section-px) 4rem 0;
   font-style: italic;
   font-family: var(--font-serif);
@@ -74,9 +75,7 @@
 }
 
 @media (max-width: 900px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+  .layout { grid-template-columns: 1fr; }
   .stickyHeader {
     position: static;
     padding: 0 var(--section-px) 2.5rem;
