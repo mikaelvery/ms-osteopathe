@@ -1,6 +1,6 @@
 .section {
   background: var(--forest);
-  padding: calc(var(--section-py) * 0.6) 0 calc(var(--section-py) * 0.5);
+  padding: var(--section-py) 0;
   overflow: clip;
 }
 

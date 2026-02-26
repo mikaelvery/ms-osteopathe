@@ -23,7 +23,7 @@
 /* ─── Flèches ────────────────────────────────────────────── */
 .arrow {
   position: absolute;
-  top: calc(clamp(240px, 38vh, 460px) / 2);
+  top: calc(clamp(280px, 46vh, 540px) / 2);
   transform: translateY(-50%);
   z-index: 10;
   width: 88px;           /* presque double */
@@ -79,9 +79,30 @@
   flex: 0 0 auto;
   width: clamp(200px, 22vw, 320px);
   padding-right: 1.5rem;
-  padding-top: 0;            /* aligné avec le haut des images */
+  padding-top: 0;
   pointer-events: none;
   cursor: default;
+}
+
+/* Tag "Le cabinet" — même style que .section-tag global */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.tag::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
 }
 
 .textTitle {
@@ -129,7 +150,7 @@
 .imgWrap {
   position: relative;
   width: 100%;
-  height: clamp(240px, 38vh, 460px);
+  height: clamp(280px, 46vh, 540px);
   overflow: hidden;
   background: var(--sage);
   flex-shrink: 0;

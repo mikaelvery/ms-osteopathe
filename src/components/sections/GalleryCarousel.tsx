@@ -114,6 +114,7 @@ export function GalleryCarousel({ images, title, desc, count }: Props) {
       >
         {/* Slide texte */}
         <div ref={textRef} className={styles.textSlide}>
+          <p className={styles.tag}>Le cabinet</p>
           <h2 className={styles.textTitle}>{title}</h2>
           <p className={styles.textDesc}>{desc}</p>
           <div className={styles.textDivider} />

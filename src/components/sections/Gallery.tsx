@@ -16,7 +16,6 @@ export default async function Gallery() {
 
   return (
     <section className={styles.section} id="galerie">
-      <p className="section-tag" style={{ padding: `0 var(--section-px)` }}>Le cabinet</p>
       <GalleryCarousel
         images={images ?? []}
         title="Un espace pensé pour votre confort"
