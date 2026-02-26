@@ -23,7 +23,7 @@
 /* ─── Flèches ────────────────────────────────────────────── */
 .arrow {
   position: absolute;
-  top: calc(clamp(280px, 46vh, 540px) / 2);
+  top: calc(clamp(280px, 38vh, 500px) / 2);
   transform: translateY(-50%);
   z-index: 10;
   width: 88px;           /* presque double */
@@ -150,7 +150,7 @@
 .imgWrap {
   position: relative;
   width: 100%;
-  height: clamp(280px, 46vh, 540px);
+  height: clamp(280px, 38vh, 500px);
   overflow: hidden;
   background: var(--sage);
   flex-shrink: 0;
