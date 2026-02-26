@@ -1,183 +1,203 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-}
-
-/* ─── Track ─────────────────────────────────────────────── */
-.track {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  cursor: grab;
-  /* Déborde sur toute la largeur de l'écran depuis la colonne droite */
-  padding-right: var(--section-px);
-  /* Pas de padding left — la colonne sticky header s'en occupe */
-}
-.track::-webkit-scrollbar { display: none; }
-.trackDragging { cursor: grabbing; user-select: none; }
-
-/* ─── Slide ──────────────────────────────────────────────── */
-.slide {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
-  /* Largeur variable selon viewport */
-  width: clamp(240px, 36vw, 460px);
-}
-
-/* Chaque 2e slide est plus haute → rythme éditorial Aesop */
-.slide:nth-child(odd) .slideInner {
-  height: clamp(260px, 42vw, 520px);
-}
-
-.slideInner {
+.root {
   position: relative;
-  height: clamp(260px, 42vw, 520px);
-  overflow: hidden;
-  background: var(--sage);
 }
 
-.slideImg {
-  object-fit: cover;
-  filter: saturate(0.7) contrast(1.08);
-  transition:
-    transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    filter  0.6s ease;
-  will-change: transform;
-}
-
-.slide:hover .slideImg {
-  transform: scale(1.05);
-  filter: saturate(0.88) contrast(1.04);
-}
-
-/* ─── Overlay (numéro + légende) ─────────────────────────── */
-.slideOverlay {
+/* ─── Fades latéraux ─────────────────────────────────────── */
+.fade {
   position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.125rem;
-  background: linear-gradient(
-    to bottom,
-    rgba(10, 25, 18, 0.18) 0%,
-    transparent 35%,
-    transparent 55%,
-    rgba(10, 25, 18, 0.72) 100%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(to right, var(--forest) 0%, transparent 100%);
+}
+.fadeRight {
+  right: 0;
+  background: linear-gradient(to left, var(--forest) 0%, transparent 100%);
 }
 
-.slide:hover .slideOverlay { opacity: 1; }
-
-.slideNum {
-  font-family: var(--font-mono);
-  font-size: 0.52rem;
-  font-weight: 300;
-  letter-spacing: 0.22em;
-  color: rgba(245, 240, 232, 0.55);
-  align-self: flex-end;
-}
-
-.slideLabel {
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  font-weight: 300;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.85);
-  line-height: 1.5;
-  /* Ligne or à gauche */
-  padding-left: 12px;
-  border-left: 1px solid var(--gold);
-  margin-top: auto;
-}
-
-/* Sentinel de padding à droite */
-.sentinel {
-  flex: 0 0 var(--section-px);
-}
-
-/* ─── Controls ───────────────────────────────────────────── */
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-right: var(--section-px);
-}
-
-/* Dots = barres de progression style Aesop */
-.progress {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-
-.dot {
-  width: 24px;
-  height: 1px;
-  background: rgba(245, 240, 232, 0.18);
-  border: none;
-  padding: 6px 0;   /* zone de clic plus grande */
-  background-clip: content-box;
-  cursor: pointer;
-  transition: background-color 0.4s, width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 1px;
-}
-
-.dotActive {
-  width: 40px;
-  background-color: var(--gold) !important;
-  background-clip: content-box;
-}
-
-/* Flèches */
-.arrows {
-  display: flex;
-  gap: 6px;
-}
-
+/* ─── Flèches ────────────────────────────────────────────── */
 .arrow {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid rgba(245, 240, 232, 0.14);
-  background: transparent;
-  color: rgba(245, 240, 232, 0.5);
+  position: absolute;
+  top: calc(clamp(240px, 38vh, 460px) / 2);
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 88px;           /* presque double */
+  height: 88px;
+  background: var(--charcoal);    /* fond très sombre */
+  border: none;
+  color: var(--cream);            /* flèche crème */
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: border-color 0.3s, color 0.3s, background 0.3s;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+/* Flèche gauche — collée au bord gauche de l'écran */
+.arrowLeft  {
+  left: 0;
+}
+/* Flèche droite — collée au bord droit */
+.arrowRight {
+  right: 0;
 }
 
-.arrow:hover:not(:disabled) {
-  border-color: var(--gold);
-  color: var(--gold);
-  background: rgba(201, 169, 110, 0.07);
+.arrowShow {
+  opacity: 1;
+  pointer-events: auto;
+}
+.arrow:hover {
+  background: var(--forest);
 }
 
-.arrowDisabled {
-  opacity: 0.2;
-  cursor: not-allowed;
+/* ─── Track ──────────────────────────────────────────────── */
+.track {
+  display: flex;
+  align-items: flex-start;   /* texte et images démarrent au même niveau */
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-padding-left: var(--section-px);
+  scrollbar-width: none;
+  cursor: default;
+  padding-left: var(--section-px);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.track::-webkit-scrollbar { display: none; }
+
+/* ─── Slide texte ────────────────────────────────────────── */
+.textSlide {
+  flex: 0 0 auto;
+  width: clamp(200px, 22vw, 320px);
+  padding-right: 1.5rem;
+  padding-top: 0;            /* aligné avec le haut des images */
+  pointer-events: none;
+  cursor: default;
 }
 
-/* ─── Responsive ──────────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .slide {
-    width: clamp(220px, 52vw, 360px);
+.textTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 2.6vw, 3rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--cream);
+  letter-spacing: -0.015em;
+  margin-bottom: 1.25rem;
+}
+
+.textDesc {
+  font-size: 0.86rem;
+  line-height: 1.85;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.textDivider {
+  width: 20px;
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.4;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.textCount {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.2);
+}
+
+/* ─── Slide photo ────────────────────────────────────────── */
+.slide {
+  flex: 0 0 auto;
+  width: clamp(240px, 30vw, 460px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.imgWrap {
+  position: relative;
+  width: 100%;
+  height: clamp(240px, 38vh, 460px);
+  overflow: hidden;
+  background: var(--sage);
+  flex-shrink: 0;
+  cursor: grab;
+}
+.imgWrap:active { cursor: grabbing; }
+
+.img {
+  object-fit: cover;
+  filter: saturate(0.72) contrast(1.05);
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.5s ease;
+  will-change: transform;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+.slide:hover .img {
+  transform: scale(1.04);
+  filter: saturate(0.88) contrast(1.02);
+}
+
+.slideText {
+  padding: 0 0.125rem;
+  cursor: default;
+}
+
+.slideLabel {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--cream);
+  line-height: 1.4;
+}
+
+.endPad { flex: 0 0 var(--section-px); }
+
+/* ─── Mobile layout séparé ───────────────────────────────── */
+.mobileLayout { display: none; }
+
+@media (max-width: 768px) {
+  .track  { display: none; }
+  .arrow  { display: none; }
+  .fade   { display: none; }
+
+  .mobileLayout {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
-}
 
-@media (max-width: 640px) {
-  .slide {
-    width: 76vw;
+  .mobileText {
+    padding: 0 var(--section-px) 2.5rem;
   }
-  .controls {
-    padding-right: 1.5rem;
+
+  .mobileTrack {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding-left: var(--section-px);
+    padding-right: var(--section-px);
+    scrollbar-width: none;
+    -webkit-tap-highlight-color: transparent;
   }
+  .mobileTrack::-webkit-scrollbar { display: none; }
+
+  .slide   { width: 72vw; flex-shrink: 0; }
+  .imgWrap { height: 54vw; }
 }

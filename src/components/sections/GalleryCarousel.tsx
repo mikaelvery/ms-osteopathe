@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Image from 'next/image'
 import styles from './GalleryCarousel.module.css'
 
@@ -13,132 +13,164 @@ interface GalleryImage {
 
 interface Props {
   images: GalleryImage[]
+  title: string
+  desc: string
+  count: number
 }
 
-export function GalleryCarousel({ images }: Props) {
+export function GalleryCarousel({ images, title, desc, count }: Props) {
   const trackRef   = useRef<HTMLDivElement>(null)
-  const [active, setActive]     = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
-  const dragStart  = useRef(0)
-  const scrollStart = useRef(0)
+  const textRef    = useRef<HTMLDivElement>(null)
+  const [active, setActive]         = useState(0)
+  const [textHidden, setTextHidden] = useState(false)  // flèches visibles quand texte hors écran
+  const dragRef = useRef({ dragging: false, startX: 0, scrollLeft: 0 })
 
-  // Update active dot based on scroll position
-  const onScroll = useCallback(() => {
-    const track = trackRef.current
-    if (!track) return
-    const slideWidth = track.scrollWidth / images.length
-    const idx = Math.round(track.scrollLeft / slideWidth)
-    setActive(Math.max(0, Math.min(idx, images.length - 1)))
-  }, [images.length])
-
+  // Un seul listener : met à jour textHidden ET active index
   useEffect(() => {
     const track = trackRef.current
     if (!track) return
+    const onScroll = () => {
+      // Flèches visibles quand le texte est sorti
+      const textSlide = textRef.current
+      if (textSlide) {
+        setTextHidden(track.scrollLeft > textSlide.offsetWidth * 0.5)
+      }
+      // Active index pour les flèches prev/next
+      const slides = track.querySelectorAll<HTMLElement>('[data-slide]')
+      let closest = 0, minDist = Infinity
+      slides.forEach((el, i) => {
+        const dist = Math.abs(el.getBoundingClientRect().left - track.getBoundingClientRect().left)
+        if (dist < minDist) { minDist = dist; closest = i }
+      })
+      setActive(closest)
+    }
     track.addEventListener('scroll', onScroll, { passive: true })
     return () => track.removeEventListener('scroll', onScroll)
-  }, [onScroll])
+  }, [])
 
-  // Scroll to slide
-  function scrollTo(idx: number) {
+  function scrollToSlide(idx: number) {
     const track = trackRef.current
     if (!track) return
-    const slideWidth = track.scrollWidth / images.length
-    track.scrollTo({ left: slideWidth * idx, behavior: 'smooth' })
+    const target = track.querySelector<HTMLElement>(`[data-slide="${idx}"]`)
+    if (!target) return
+    track.scrollTo({ left: target.offsetLeft - 24, behavior: 'smooth' })
     setActive(idx)
   }
 
-  // Mouse drag
-  function onMouseDown(e: React.MouseEvent) {
-    setIsDragging(true)
-    dragStart.current   = e.clientX
-    scrollStart.current = trackRef.current?.scrollLeft ?? 0
+  function onPointerDown(e: React.PointerEvent) {
+    const track = trackRef.current
+    if (!track) return
+    dragRef.current = { dragging: true, startX: e.clientX, scrollLeft: track.scrollLeft }
+    track.setPointerCapture(e.pointerId)
+  }
+  function onPointerMove(e: React.PointerEvent) {
+    if (!dragRef.current.dragging || !trackRef.current) return
+    trackRef.current.scrollLeft = dragRef.current.scrollLeft + (dragRef.current.startX - e.clientX)
+  }
+  function onPointerUp(e: React.PointerEvent) {
+    dragRef.current.dragging = false
+    if (trackRef.current) trackRef.current.releasePointerCapture(e.pointerId)
   }
 
-  function onMouseMove(e: React.MouseEvent) {
-    if (!isDragging || !trackRef.current) return
-    const dx = dragStart.current - e.clientX
-    trackRef.current.scrollLeft = scrollStart.current + dx
-  }
-
-  function onMouseUp() { setIsDragging(false) }
-
-  // Arrow nav
-  function prev() { scrollTo(Math.max(0, active - 1)) }
-  function next() { scrollTo(Math.min(images.length - 1, active + 1)) }
+  const canPrev = active > 0
+  const canNext = active < images.length - 1
 
   return (
-    <div className={styles.wrapper}>
-      {/* ── Scrollable track ── */}
+    <div className={styles.root}>
+      {/* Fades */}
+      <div className={`${styles.fade} ${styles.fadeLeft}`} />
+      <div className={`${styles.fade} ${styles.fadeRight}`} />
+
+      {/* Flèche gauche — collée au bord gauche, visible quand texte caché */}
+      <button
+        className={`${styles.arrow} ${styles.arrowLeft} ${textHidden && canPrev ? styles.arrowShow : ''}`}
+        onClick={() => scrollToSlide(active - 1)}
+        aria-label="Précédent"
+      >
+        <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+      </button>
+
+      {/* Flèche droite — visible quand texte caché */}
+      <button
+        className={`${styles.arrow} ${styles.arrowRight} ${textHidden && canNext ? styles.arrowShow : ''}`}
+        onClick={() => scrollToSlide(active + 1)}
+        aria-label="Suivant"
+      >
+        <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      {/* ── Desktop : tout dans le même track horizontal ── */}
       <div
         ref={trackRef}
-        className={`${styles.track} ${isDragging ? styles.trackDragging : ''}`}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
+        className={styles.track}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
-        {images.map((img, i) => (
-          <div key={img.id} className={styles.slide}>
-            <div className={styles.slideInner}>
-              <Image
-                src={img.url}
-                alt={img.label}
-                fill
-                className={styles.slideImg}
-                sizes="(max-width: 768px) 80vw, 40vw"
-                draggable={false}
-              />
-              <div className={styles.slideOverlay}>
-                <span className={styles.slideNum}>
-                  {String(i + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
-                </span>
-                {img.label && (
-                  <p className={styles.slideLabel}>{img.label}</p>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-        {/* Right padding sentinel */}
-        <div className={styles.sentinel} />
-      </div>
-
-      {/* ── Controls ── */}
-      <div className={styles.controls}>
-        {/* Progress bar dots */}
-        <div className={styles.progress}>
-          {images.map((_, i) => (
-            <button
-              key={i}
-              className={`${styles.dot} ${i === active ? styles.dotActive : ''}`}
-              onClick={() => scrollTo(i)}
-              aria-label={`Photo ${i + 1}`}
-            />
-          ))}
+        {/* Slide texte */}
+        <div ref={textRef} className={styles.textSlide}>
+          <h2 className={styles.textTitle}>{title}</h2>
+          <p className={styles.textDesc}>{desc}</p>
+          <div className={styles.textDivider} />
+          <p className={styles.textCount}>{count} photo{count > 1 ? 's' : ''}</p>
         </div>
 
-        {/* Arrow buttons */}
-        <div className={styles.arrows}>
-          <button
-            className={`${styles.arrow} ${active === 0 ? styles.arrowDisabled : ''}`}
-            onClick={prev}
-            disabled={active === 0}
-            aria-label="Photo précédente"
-          >
-            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-              <path d="M19 12H5M12 5l-7 7 7 7"/>
-            </svg>
-          </button>
-          <button
-            className={`${styles.arrow} ${active === images.length - 1 ? styles.arrowDisabled : ''}`}
-            onClick={next}
-            disabled={active === images.length - 1}
-            aria-label="Photo suivante"
-          >
-            <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
+        {/* Photos */}
+        {images.map((img, i) => (
+          <div key={img.id} data-slide={i} className={styles.slide}>
+            <div className={styles.imgWrap}>
+              <Image
+                src={img.url}
+                alt={img.label || 'Cabinet Mathieu Spaeth'}
+                fill
+                className={styles.img}
+                sizes="(max-width: 768px) 72vw, 30vw"
+                draggable={false}
+              />
+            </div>
+            {img.label && (
+              <div className={styles.slideText}>
+                <p className={styles.slideLabel}>{img.label}</p>
+              </div>
+            )}
+          </div>
+        ))}
+        <div className={styles.endPad} />
+      </div>
+
+      {/* ── Mobile uniquement : texte au-dessus + scroll photos séparé ── */}
+      <div className={styles.mobileLayout}>
+        <div className={styles.mobileText}>
+          <h2 className={styles.textTitle}>{title}</h2>
+          <p className={styles.textDesc}>{desc}</p>
+          <div className={styles.textDivider} />
+          <p className={styles.textCount}>{count} photo{count > 1 ? 's' : ''}</p>
+        </div>
+        <div className={styles.mobileTrack}>
+          {images.map((img, i) => (
+            <div key={img.id} className={styles.slide}>
+              <div className={styles.imgWrap}>
+                <Image
+                  src={img.url}
+                  alt={img.label || 'Cabinet Mathieu Spaeth'}
+                  fill
+                  className={styles.img}
+                  sizes="72vw"
+                  draggable={false}
+                />
+              </div>
+              {img.label && (
+                <div className={styles.slideText}>
+                  <p className={styles.slideLabel}>{img.label}</p>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

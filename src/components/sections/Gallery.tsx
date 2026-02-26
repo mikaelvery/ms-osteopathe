@@ -16,36 +16,13 @@ export default async function Gallery() {
 
   return (
     <section className={styles.section} id="galerie">
-      <div className={styles.layout}>
-
-        {/* Left — sticky header */}
-        <div className={styles.stickyHeader}>
-          <p className="section-tag">Le cabinet</p>
-          <h2 className="section-title">
-            Un espace pensé<br />
-            <em>pour votre confort</em>
-          </h2>
-          <p className={styles.desc}>
-            Situé au sein de la salle Fitfamily à Castelnau-le-Lez, le cabinet
-            offre un cadre calme et professionnel, conçu pour vous accueillir
-            dans les meilleures conditions.
-          </p>
-          <div className={styles.headerDivider} />
-          <p className={styles.headerCount}>
-            {images?.length ?? 0} photo{(images?.length ?? 0) > 1 ? 's' : ''}
-          </p>
-        </div>
-
-        {/* Right — carousel */}
-        <div className={styles.carouselArea}>
-          {!images || images.length === 0 ? (
-            <p className={styles.empty}>Les photos du cabinet arrivent bientôt.</p>
-          ) : (
-            <GalleryCarousel images={images} />
-          )}
-        </div>
-
-      </div>
+      <p className="section-tag" style={{ padding: `0 var(--section-px)` }}>Le cabinet</p>
+      <GalleryCarousel
+        images={images ?? []}
+        title="Un espace pensé pour votre confort"
+        desc="Situé au sein de la salle Fitfamily à Castelnau-le-Lez, le cabinet offre un cadre calme et professionnel, conçu pour vous accueillir dans les meilleures conditions."
+        count={images?.length ?? 0}
+      />
     </section>
   )
 }
