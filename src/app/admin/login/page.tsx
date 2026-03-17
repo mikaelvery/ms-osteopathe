@@ -47,6 +47,9 @@ export default function LoginPage() {
               placeholder="exemple@gmail.com"
               required
               autoComplete="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
             />
           </div>
 
@@ -60,6 +63,9 @@ export default function LoginPage() {
               placeholder="••••••••"
               required
               autoComplete="current-password"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
             />
           </div>
 
